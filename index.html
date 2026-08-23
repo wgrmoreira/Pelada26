@@ -207,7 +207,7 @@ function resize() {
 window.addEventListener('resize', resize); resize();
 
 function goToTeamSelect(mode) {
-    requestFullScreen(); // Solicita fullscreen ao interagir
+    requestFullScreen(); 
     initAudio(); gameMode = mode;
     document.getElementById('screen-start').classList.add('hidden');
     document.getElementById('screen-team').classList.remove('hidden');
@@ -401,11 +401,11 @@ function confirmFormation() {
     playKick(); document.getElementById('btn-confirm-formation').classList.add('hidden');
     for(let p of players) { if(p.team === 1) { p.startX = p.x; p.startY = p.y; } }
     STATE = 'IDLE'; TURN = nextTurn;
-    if (TURN === 1) document.getElementById('status').innerText = "Seu Turno (Arraste e Solte para Chutar)";
+    if (TURN === 1) document.getElementById('status').innerText = "Seu Turno (Arraste na direção desejada)";
     else { document.getElementById('status').innerText = "Turno da IA..."; setTimeout(playAI, 1000); }
 }
 
-// Entradas / Slingshot
+// Entradas / Slingshot -> Drag-and-Shoot (Ajustado)
 function getPointerPos(e) { if (e.touches) return { x: e.touches[0].clientX, y: e.touches[0].clientY }; return { x: e.clientX, y: e.clientY }; }
 function pointerDown(e) {
     if (STATE !== 'IDLE' && STATE !== 'FORMATION') return;
@@ -427,7 +427,10 @@ function pointerUp(e) {
     if (!selectedPlayer) return;
     if (STATE === 'DRAGGING') { STATE = 'FORMATION'; selectedPlayer = null; } 
     else if (STATE === 'AIMING') {
-        let dx = dragStart.x - dragCurrent.x; let dy = dragStart.y - dragCurrent.y;
+        // AJUSTE DIREÇÃO FRENTE: A direção é baseada de dragCurrent subtraindo dragStart
+        let dx = dragCurrent.x - dragStart.x; 
+        let dy = dragCurrent.y - dragStart.y;
+        
         let dist = Math.hypot(dx, dy); let maxDist = 180;
         if (dist > maxDist) { dx = (dx / dist) * maxDist; dy = (dy / dist) * maxDist; }
         if (dist > 10) playKick(); 
@@ -631,8 +634,11 @@ function draw() {
     
     if (STATE !== 'FORMATION' && ball.visible) drawSoccerBall(ball);
 
+    // AJUSTE: Seta de mira agora aponta na direção do arrasto (dx = current - start)
     if (STATE === 'AIMING' && selectedPlayer) {
-        let dx = dragStart.x - dragCurrent.x; let dy = dragStart.y - dragCurrent.y;
+        let dx = dragCurrent.x - dragStart.x; 
+        let dy = dragCurrent.y - dragStart.y;
+        
         ctx.beginPath(); ctx.moveTo(selectedPlayer.x, selectedPlayer.y); ctx.lineTo(selectedPlayer.x + dx, selectedPlayer.y + dy);
         let force = Math.min(Math.hypot(dx, dy), 180); ctx.strokeStyle = force > 130 ? '#ff3333' : force > 70 ? '#ffff33' : '#ffffff';
         ctx.lineWidth = 4; ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
