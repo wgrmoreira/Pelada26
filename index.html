@@ -6,7 +6,6 @@
     <title>Pelada 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        /* APLICA A FONTE RETRÔ EM TUDO (exceto no que for sobrescrito) */
         * { font-family: 'Press Start 2P', cursive; box-sizing: border-box; }
         
         body, html {
@@ -104,7 +103,7 @@
 <body>
 
     <div id="screen-start" class="screen">
-        <button class="press-start-btn" onclick="openModeMenu()">PRESS START</button>
+        <button class="press-start-btn" id="btn-start" onclick="handleStartClick()">PRESS START</button>
         <div class="mobile-note">Desenvolvido para Mobile</div>
     </div>
 
@@ -174,12 +173,13 @@ let TURN = 1; let nextTurn = 1;
 let scoreP1 = 0; let scoreAI = 0;
 let playerTeamType = 'FLA'; let aiTeamType = 'VAS';
 let scoringTeam = 0; let fieldType = 0; 
+let startClicks = 0; // Controle para o duplo clique inicial
 
 // Variáveis de Tempo e Lados
-let currentHalf = 1; // 1 ou 2
-let currentTime = 0; // em minutos
-let extraTime = 0; // Acréscimos
-let p1Side = 'BOTTOM'; // 'BOTTOM' ou 'TOP'
+let currentHalf = 1; 
+let currentTime = 0; 
+let extraTime = 0; 
+let p1Side = 'BOTTOM'; 
 
 let ball = { x: 0, y: 0, vx: 0, vy: 0, r: 10, mass: 0.5, rotation: 0, visible: true };
 let players = []; let goalkeepers = []; let particles = []; let fireworksTimer = 0;
@@ -191,8 +191,6 @@ let goalWidth, goalDepth, areaW, areaH;
 let popup = { text: "", timer: 0, maxTimer: 0, isRetro: false };
 let ballTouched = false;
 let lastShotY = 0;
-let lastTouchTeam = 0; 
-let lastPlayerToTouchBall = null; 
 let celebrationTarget = null;
 let isOwnGoalCelebration = false;
 
@@ -204,7 +202,7 @@ function requestFullScreen() {
     else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen().catch(e=>{}); }
 }
 
-// ================= SISTEMA DE ÁUDIO SINTÉTICO (Para efeitos menores) =================
+// ================= SISTEMA DE ÁUDIO =================
 function initAudio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -248,8 +246,12 @@ function playCrowdCheer() {
 
 function playKick() { playTone(100, 'triangle', 0.2, 1); playTone(150, 'square', 0.1, 0.5); }
 function playBounce() { playTone(300, 'sine', 0.1, 0.2); }
+
+// Sistema de Apitos
 function playWhistle() { playTone(1200, 'sine', 0.4, 0.5); setTimeout(()=>playTone(1400, 'sine', 0.6, 0.6), 200); }
-function playDoubleWhistle() { playWhistle(); setTimeout(playWhistle, 600); }
+function playDoubleWhistle() { playWhistle(); setTimeout(playWhistle, 800); }
+function playTripleWhistle() { playWhistle(); setTimeout(playWhistle, 800); setTimeout(playWhistle, 1600); }
+
 function playFireworkSound() { 
     if(!audioCtx) return;
     let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain();
@@ -268,9 +270,19 @@ function resize() {
 window.addEventListener('resize', resize); resize();
 
 // ================= NAVEGAÇÃO =================
+function handleStartClick() {
+    if (startClicks === 0) {
+        initAudio();
+        audioMenu.play().catch(e=>{});
+        document.getElementById('btn-start').innerText = "INICIAR";
+        startClicks++;
+    } else {
+        openModeMenu();
+    }
+}
+
 function openModeMenu() {
     playClickSound(); requestFullScreen(); 
-    audioMenu.play().catch(e=>{}); 
     document.getElementById('screen-start').classList.add('hidden');
     document.getElementById('screen-mode').classList.remove('hidden');
 }
@@ -369,7 +381,7 @@ function checkTimeEnd() {
 
 function endOfHalf() {
     STATE = 'HALFTIME';
-    playWhistle();
+    playDoubleWhistle();
     showPopup("FIM DO 1º TEMPO!", 180, true); 
     
     setTimeout(() => {
@@ -386,7 +398,7 @@ function endOfHalf() {
 
 function endOfMatch() {
     STATE = 'GAMEOVER';
-    playDoubleWhistle();
+    playTripleWhistle();
     showPopup("FIM DE JOGO!", 180, true);
     setTimeout(() => {
         processMatchResult();
@@ -501,7 +513,6 @@ function setupInitialMatch() {
 
     setupPositionsForHalf();
     startFormationPhase();
-    playWhistle();
 }
 
 function getTopArea() { return { minX: canvas.width/2 - goalWidth/2 + ball.r, maxX: canvas.width/2 + goalWidth/2 - ball.r, minY: boundTop + ball.r, maxY: boundTop + fieldH * 0.1 - ball.r }; }
@@ -525,7 +536,7 @@ function setupPositionsForHalf() {
 function startFormationPhase() {
     STATE = 'FORMATION';
     ball.x = canvas.width / 2; ball.y = canvas.height / 2; ball.vx = 0; ball.vy = 0; ball.visible = true;
-    lastTouchTeam = 0; lastPlayerToTouchBall = null; celebrationTarget = null;
+    lastTouchTeam = 0; celebrationTarget = null;
     
     let aiIdx = 0; let p1Idx = 0;
     const cw = canvas.width;
@@ -573,6 +584,10 @@ function startFormationPhase() {
 
 function confirmFormation() {
     playClickSound(); playKick(); 
+    
+    if (currentTime === 0 && currentHalf === 1) playWhistle();
+    else if (currentTime === 45 && currentHalf === 2) playWhistle();
+    
     showPopup("COMEÇA O JOGO!", 90, true); 
     document.getElementById('btn-confirm-formation').classList.add('hidden');
     for(let p of players) { if(p.team === 1) { p.startX = p.x; p.startY = p.y; } }
@@ -622,7 +637,7 @@ function pointerUp(e) {
         let dist = Math.hypot(dx, dy); let maxDist = 60; 
         if (dist > maxDist) { dx = (dx / dist) * maxDist; dy = (dy / dist) * maxDist; }
         let powerMult = 28 / maxDist;
-        if (dist > 5) { playKick(); ballTouched = false; lastShotY = ball.y; lastTouchTeam = 1; advanceTime(); } 
+        if (dist > 5) { playKick(); ballTouched = false; lastShotY = ball.y; advanceTime(); } 
         selectedPlayer.vx = dx * powerMult * 0.7; selectedPlayer.vy = dy * powerMult * 0.7;
         selectedPlayer = null; STATE = 'MOVING';
     }
@@ -636,9 +651,6 @@ function resolveCollision(c1, c2) {
         
         if (c1 === ball || c2 === ball) {
             ballTouched = true;
-            let playerPiece = c1 === ball ? c2 : c1;
-            lastTouchTeam = playerPiece.team;
-            lastPlayerToTouchBall = playerPiece;
         }
 
         if ((c1 === ball && c2.isGK) || (c2 === ball && c1.isGK)) {
@@ -706,8 +718,8 @@ function updatePhysics() {
             if (e.y - e.r < boundTop) { 
                 if (e.x > canvas.width/2 - goalWidth/2 && e.x < canvas.width/2 + goalWidth/2) {
                     if (STATE !== 'SCORED') { 
-                        if(p1Side === 'BOTTOM') { scoreP1++; scoringTeam = 1; processGoal(lastTouchTeam === 2); }
-                        else { scoreAI++; scoringTeam = 2; processGoal(lastTouchTeam === 1); }
+                        if(p1Side === 'BOTTOM') { scoreP1++; scoringTeam = 1; processGoal(); }
+                        else { scoreAI++; scoringTeam = 2; processGoal(); }
                     } 
                     e.vx = 0; e.vy = 0; e.visible = false; 
                 } else { e.y = boundTop + e.r; e.vy *= -0.8; playBounce(); }
@@ -715,8 +727,8 @@ function updatePhysics() {
             if (e.y + e.r > boundBottom) { 
                 if (e.x > canvas.width/2 - goalWidth/2 && e.x < canvas.width/2 + goalWidth/2) {
                     if (STATE !== 'SCORED') { 
-                        if(p1Side === 'BOTTOM') { scoreAI++; scoringTeam = 2; processGoal(lastTouchTeam === 1); }
-                        else { scoreP1++; scoringTeam = 1; processGoal(lastTouchTeam === 2); }
+                        if(p1Side === 'BOTTOM') { scoreAI++; scoringTeam = 2; processGoal(); }
+                        else { scoreP1++; scoringTeam = 1; processGoal(); }
                     } 
                     e.vx = 0; e.vy = 0; e.visible = false;
                 } else { e.y = boundBottom - e.r; e.vy *= -0.8; playBounce(); }
@@ -741,7 +753,8 @@ function updatePhysics() {
     }
 }
 
-function processGoal(isOwnGoal) {
+function processGoal() {
+    let isOwnGoal = (scoringTeam !== TURN);
     STATE = 'SCORED'; playWhistle(); playCrowdCheer();
     document.getElementById('score-text').innerText = scoreAI + " x " + scoreP1;
     
@@ -764,12 +777,9 @@ function processGoal(isOwnGoal) {
     }
 
     fireworksTimer = 300; nextTurn = scoringTeam === 1 ? 2 : 1; 
-    
-    celebrationTarget = lastPlayerToTouchBall;
     isOwnGoalCelebration = isOwnGoal;
 
     setTimeout(() => {
-        celebrationTarget = null;
         if (checkTimeEnd()) return;
         startFormationPhase();
     }, waitTime); 
@@ -808,7 +818,7 @@ function playAI() {
     
     let dx = targetX - bestPlayer.x; let dy = targetY - bestPlayer.y; let dist = Math.hypot(dx, dy); if (dist === 0) { dx = 0; dy = 1; dist = 1; } 
     
-    playKick(); ballTouched = false; lastShotY = ball.y; lastTouchTeam = 2; advanceTime();
+    playKick(); ballTouched = false; lastShotY = ball.y; advanceTime();
     bestPlayer.vx = (dx / dist) * Math.min(27, dist * 0.15 + 14); bestPlayer.vy = (dy / dist) * Math.min(27, dist * 0.15 + 14);
     STATE = 'MOVING';
 }
@@ -831,11 +841,12 @@ function updateCelebrations() {
                     }
                 }
             } else {
-                if (p.team === scoringTeamId && celebrationTarget) {
-                    if (p === celebrationTarget) { p.x += (Math.random() - 0.5) * 5; p.y += (Math.random() - 0.5) * 5; } 
+                if (p.team === scoringTeamId) {
+                    let target = players.find(pl => pl.team === scoringTeamId);
+                    if (p === target) { p.x += (Math.random() - 0.5) * 5; p.y += (Math.random() - 0.5) * 5; } 
                     else {
-                        let dx = celebrationTarget.x - p.x; let dy = celebrationTarget.y - p.y; let dist = Math.hypot(dx, dy);
-                        if (dist > celebrationTarget.r * 2.5) { p.x += (dx / dist) * 3; p.y += (dy / dist) * 3; } 
+                        let dx = target.x - p.x; let dy = target.y - p.y; let dist = Math.hypot(dx, dy);
+                        if (dist > target.r * 2.5) { p.x += (dx / dist) * 3; p.y += (dy / dist) * 3; } 
                         else { p.x += (Math.random() - 0.5) * 5; p.y += (Math.random() - 0.5) * 5; }
                     }
                 }
@@ -920,6 +931,27 @@ function drawNetGrid(x, y, w, h) {
     for(let i=4; i<h; i+=4) { ctx.beginPath(); ctx.moveTo(x, y+i); ctx.lineTo(x+w, y+i); ctx.stroke(); }
 }
 
+function drawTurnIndicator() {
+    if (STATE !== 'IDLE' && STATE !== 'AIMING') return;
+    ctx.save();
+    ctx.translate(boundLeft / 2, canvas.height / 2); 
+    ctx.fillStyle = TURN === 1 ? '#00d2ff' : '#ff3333';
+    ctx.beginPath();
+    
+    if (TURN === 1) { 
+        if (p1Side === 'BOTTOM') { ctx.moveTo(0, -30); ctx.lineTo(20, 10); ctx.lineTo(10, 10); ctx.lineTo(10, 40); ctx.lineTo(-10, 40); ctx.lineTo(-10, 10); ctx.lineTo(-20, 10); } 
+        else { ctx.moveTo(0, 30); ctx.lineTo(20, -10); ctx.lineTo(10, -10); ctx.lineTo(10, -40); ctx.lineTo(-10, -40); ctx.lineTo(-10, -10); ctx.lineTo(-20, -10); } 
+    } else { 
+        if (p1Side === 'BOTTOM') { ctx.moveTo(0, 30); ctx.lineTo(20, -10); ctx.lineTo(10, -10); ctx.lineTo(10, -40); ctx.lineTo(-10, -40); ctx.lineTo(-10, -10); ctx.lineTo(-20, -10); } 
+        else { ctx.moveTo(0, -30); ctx.lineTo(20, 10); ctx.lineTo(10, 10); ctx.lineTo(10, 40); ctx.lineTo(-10, 40); ctx.lineTo(-10, 10); ctx.lineTo(-20, 10); } 
+    }
+    
+    ctx.closePath(); ctx.fill();
+    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 5;
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.restore();
+}
+
 function drawField() {
     if (fieldType === 0) { const sh = canvas.height / 12; for (let i = 0; i < 13; i++) { ctx.fillStyle = i % 2 === 0 ? '#388E3C' : '#4CAF50'; ctx.fillRect(0, i * sh, canvas.width, sh); } } 
     else if (fieldType === 1) { ctx.fillStyle = '#1b5e20'; ctx.fillRect(0, 0, canvas.width, canvas.height); } 
@@ -971,6 +1003,7 @@ function draw() {
         ctx.strokeStyle = '#00d2ff'; ctx.lineWidth = 3; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
     }
     
+    drawTurnIndicator();
     drawFireworks();
     drawPopup();
 }
