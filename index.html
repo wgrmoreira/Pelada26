@@ -162,10 +162,10 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 let audioCtx;
 
-// Áudios Externos (MPEG)
-const audioMenu = new Audio('assets/music/telas.mpeg'); audioMenu.loop = true;
-const audioGame = new Audio('assets/music/jogotodo.mpeg'); audioGame.loop = true;
-const audioDefesa = new Audio('assets/music/defesa.mpeg');
+// Áudios Externos (MP3)
+const audioMenu = new Audio('assets/music/telas.mp3'); audioMenu.loop = true;
+const audioGame = new Audio('assets/music/jogotodo.mp3'); audioGame.loop = true;
+const audioDefesa = new Audio('assets/music/defesa.mp3');
 
 // Variáveis de Estado
 let STATE = 'MENU'; 
@@ -270,7 +270,7 @@ window.addEventListener('resize', resize); resize();
 // ================= NAVEGAÇÃO =================
 function openModeMenu() {
     playClickSound(); requestFullScreen(); 
-    audioMenu.play().catch(e=>{}); // Inicia música do Menu
+    audioMenu.play().catch(e=>{}); 
     document.getElementById('screen-start').classList.add('hidden');
     document.getElementById('screen-mode').classList.remove('hidden');
 }
@@ -285,8 +285,8 @@ function selectTeam(team) {
     playClickSound(); playerTeamType = team;
     document.getElementById('screen-team').classList.add('hidden');
     
-    audioMenu.pause(); audioMenu.currentTime = 0; // Para música do menu
-    audioGame.play().catch(e=>{}); // Toca música do jogo
+    audioMenu.pause(); audioMenu.currentTime = 0; 
+    audioGame.play().catch(e=>{}); 
 
     if (gameMode === 'CAMP') initTournament();
     else {
@@ -317,7 +317,6 @@ function drawPopup() {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         
         if (popup.isRetro) {
-            // Estilo Press Start 2P (Reto, sem zoom maluco)
             ctx.font = "14px 'Press Start 2P', cursive";
             ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 5; ctx.shadowOffsetX = 3; ctx.shadowOffsetY = 3;
@@ -325,7 +324,6 @@ function drawPopup() {
             ctx.shadowColor = 'transparent';
             ctx.fillStyle = '#FFD700'; ctx.fillText(popup.text, 0, 0);
         } else {
-            // Estilo Gibi (Inclinado, animado)
             let scale = 1;
             let timeElapsed = popup.maxTimer - popup.timer;
             if (timeElapsed < 10) scale = timeElapsed * 0.1;
@@ -377,8 +375,8 @@ function endOfHalf() {
     setTimeout(() => {
         currentHalf = 2;
         currentTime = 45;
-        extraTime = Math.floor(Math.random() * 5) + 1; // 1 a 5 minutos
-        p1Side = 'TOP'; // TROCA DE LADOS
+        extraTime = Math.floor(Math.random() * 5) + 1; 
+        p1Side = 'TOP'; 
         updateClockUI();
         
         setupPositionsForHalf();
@@ -494,7 +492,6 @@ function setupInitialMatch() {
     const pr = Math.min(cw, ch) * 0.047; ball.r = pr * 0.45;
     players = []; goalkeepers = [];
     
-    // Goleiros Instanciados (As posições serão arrumadas no setupPositionsForHalf)
     goalkeepers.push({ x: 0, y: 0, r: pr*0.75, mass: 50, team: 2, isGK: true, num: 1, gkColor: getGKColor(aiTeamType), tx: 0, ty: 0, bounds: null });
     goalkeepers.push({ x: 0, y: 0, r: pr*0.75, mass: 50, team: 1, isGK: true, num: 1, gkColor: getGKColor(playerTeamType), tx: 0, ty: 0, bounds: null });
 
@@ -512,14 +509,13 @@ function getBottomArea() { return { minX: canvas.width/2 - goalWidth/2 + ball.r,
 
 function setupPositionsForHalf() {
     const cw = canvas.width;
-    // Configura os Goleiros baseados no lado
-    goalkeepers[0].team = 2; // IA
+    goalkeepers[0].team = 2; 
     goalkeepers[0].y = p1Side === 'BOTTOM' ? boundTop + fieldH*0.05 : boundBottom - fieldH*0.05;
     goalkeepers[0].ty = goalkeepers[0].y;
     goalkeepers[0].x = cw/2;
     goalkeepers[0].bounds = p1Side === 'BOTTOM' ? getTopArea() : getBottomArea();
 
-    goalkeepers[1].team = 1; // P1
+    goalkeepers[1].team = 1; 
     goalkeepers[1].y = p1Side === 'BOTTOM' ? boundBottom - fieldH*0.05 : boundTop + fieldH*0.05;
     goalkeepers[1].ty = goalkeepers[1].y;
     goalkeepers[1].x = cw/2;
@@ -551,12 +547,12 @@ function startFormationPhase() {
             p.startX = p.x; p.startY = p.y;
             p1Idx++;
         } else if (p.team === 2) { 
-            if (p1Side === 'BOTTOM') { // IA defende Topo
+            if (p1Side === 'BOTTOM') { 
                 if(aiIdx===0){ p.x = cw/2; p.y = boundTop + areaH + p.r * 1.5; }
                 else if(aiIdx===1){ p.x = cw/2 - goalWidth * 0.4; p.y = boundTop + areaH + p.r * 3; }
                 else if(aiIdx===2){ p.x = cw/2 + goalWidth * 0.4; p.y = boundTop + areaH + p.r * 3; }
                 else if(aiIdx===3){ p.x = cw/2; p.y = boundTop + fieldH * 0.4; }
-            } else { // IA defende Fundo
+            } else { 
                 if(aiIdx===0){ p.x = cw/2; p.y = boundBottom - areaH - p.r * 1.5; }
                 else if(aiIdx===1){ p.x = cw/2 - goalWidth * 0.4; p.y = boundBottom - areaH - p.r * 3; }
                 else if(aiIdx===2){ p.x = cw/2 + goalWidth * 0.4; p.y = boundBottom - areaH - p.r * 3; }
@@ -602,11 +598,9 @@ function pointerMove(e) {
         let newX = Math.max(boundLeft + selectedPlayer.r, Math.min(boundRight - selectedPlayer.r, pos.x)); 
         let newY = Math.max(boundTop + selectedPlayer.r, Math.min(boundBottom - selectedPlayer.r, pos.y)); 
         
-        // Impede passar do meio campo
         if(p1Side === 'BOTTOM' && newY < canvas.height/2 + selectedPlayer.r) newY = canvas.height/2 + selectedPlayer.r;
         if(p1Side === 'TOP' && newY > canvas.height/2 - selectedPlayer.r) newY = canvas.height/2 - selectedPlayer.r;
 
-        // Impede área
         let inPenaltyX = newX > canvas.width/2 - areaW/2 && newX < canvas.width/2 + areaW/2;
         let inTopArea = newY < boundTop + areaH;
         let inBotArea = newY > boundBottom - areaH;
@@ -649,15 +643,14 @@ function resolveCollision(c1, c2) {
 
         if ((c1 === ball && c2.isGK) || (c2 === ball && c1.isGK)) {
             let ballSpeed = Math.hypot(ball.vx, ball.vy);
-            if (ballSpeed > 5 && STATE !== 'SCORED') showPopup("QUE DEFESA!", 120);
+            if (ballSpeed > 5 && STATE !== 'SCORED') showPopup("QUE DEFESA!", 120, false);
 
             let gk = c1.isGK ? c1 : c2; 
-            audioDefesa.currentTime = 0; audioDefesa.play().catch(e=>{}); // SOM DEFESA
+            audioDefesa.currentTime = 0; audioDefesa.play().catch(e=>{});
 
             let overlap = (ball.r + gk.r) - dist + 1; let nx = dx / dist; let ny = dy / dist;
             if (c1 === ball) { ball.x -= nx*overlap; ball.y -= ny*overlap; } else { ball.x += nx*overlap; ball.y += ny*overlap; }
             
-            // Força dependendo do lado
             let isGkTop = gk.y < canvas.height/2;
             let forceY = isGkTop ? 10 : -10; 
             let forceX = (ball.x - gk.x) * 0.2; forceX = Math.max(-8, Math.min(8, forceX));
@@ -741,7 +734,7 @@ function updatePhysics() {
 
         if (!ballTouched && STATE !== 'SCORED' && STATE !== 'GAMEOVER') {
             let missTexts = ["QUE DESELEGANTE!", "QUE TRISTEZA!", "JOGADA HORRÍVEL!"];
-            showPopup(missTexts[Math.floor(Math.random() * missTexts.length)], 120);
+            showPopup(missTexts[Math.floor(Math.random() * missTexts.length)], 120, false);
         }
         TURN = TURN === 1 ? 2 : 1; 
         if (TURN === 2) setTimeout(playAI, 400); 
@@ -755,7 +748,7 @@ function processGoal(isOwnGoal) {
     let waitTime = 4500; 
     
     if (isOwnGoal) {
-        showPopup("GOL CONTRA!", 300);
+        showPopup("GOL CONTRA!", 300, false);
     } else {
         let isGolaco = false;
         if (p1Side === 'BOTTOM') {
@@ -766,8 +759,8 @@ function processGoal(isOwnGoal) {
             if (scoringTeam === 2 && lastShotY > canvas.height / 2) isGolaco = true;
         }
         
-        if (isGolaco) showPopup("GOLAAAAÇOOOO!", 300);
-        else showPopup("GOLLLLLLLLLLLLL!", 300);
+        if (isGolaco) showPopup("GOLAAAAÇOOOO!", 300, false);
+        else showPopup("GOLLLLLLLLLLLLL!", 300, false);
     }
 
     fireworksTimer = 300; nextTurn = scoringTeam === 1 ? 2 : 1; 
@@ -789,9 +782,9 @@ function playAI() {
     for(let p of aiPlayers) {
         let d = Math.hypot(p.x - ball.x, p.y - ball.y); let score = -d; 
         
-        if (p1Side === 'BOTTOM') { // AI Ataca pra baixo (y cresce)
+        if (p1Side === 'BOTTOM') { 
             if (p.y < ball.y + ball.r) score += 1000; 
-        } else { // AI Ataca pra cima (y diminui)
+        } else { 
             if (p.y > ball.y - ball.r) score += 1000; 
         }
 
@@ -801,12 +794,12 @@ function playAI() {
     let targetX = ball.x; let targetY = ball.y;
     let isDanger = false;
     
-    if (p1Side === 'BOTTOM') { // AI defende topo
+    if (p1Side === 'BOTTOM') { 
         isDanger = (ball.y < boundTop + fieldH * 0.3) && (bestPlayer.y > ball.y - 2);
         if (isDanger) { targetX = ball.x + (ball.x > canvas.width/2 ? -ball.r*1.5 : ball.r*1.5); targetY = ball.y - ball.r*0.5; } 
         else if (bestPlayer.y > ball.y + 5) { targetX = ball.x + (ball.x > canvas.width/2 ? -ball.r*1.5 : ball.r*1.5); targetY = ball.y; } 
         else { let ang = Math.atan2(boundBottom - ball.y, canvas.width/2 - ball.x); targetX = ball.x - Math.cos(ang)*(ball.r*0.4); targetY = ball.y - Math.sin(ang)*(ball.r*0.4); }
-    } else { // AI defende baixo
+    } else { 
         isDanger = (ball.y > boundBottom - fieldH * 0.3) && (bestPlayer.y < ball.y + 2);
         if (isDanger) { targetX = ball.x + (ball.x > canvas.width/2 ? -ball.r*1.5 : ball.r*1.5); targetY = ball.y + ball.r*0.5; } 
         else if (bestPlayer.y < ball.y - 5) { targetX = ball.x + (ball.x > canvas.width/2 ? -ball.r*1.5 : ball.r*1.5); targetY = ball.y; } 
@@ -825,7 +818,7 @@ function updateCelebrations() {
         let scoringTeamId = scoringTeam;
         let concedingTeamId = scoringTeamId === 1 ? 2 : 1;
 
-        for (let p of players) { // Goleiros foram excluidos do loop de comemoração
+        for (let p of players) { 
             if (isOwnGoalCelebration) {
                 if (p.team === concedingTeamId) { p.x += (Math.random() - 0.5) * 3; p.y += (Math.random() - 0.5) * 3; } 
                 else if (p.team === scoringTeamId) {
@@ -927,28 +920,6 @@ function drawNetGrid(x, y, w, h) {
     for(let i=4; i<h; i+=4) { ctx.beginPath(); ctx.moveTo(x, y+i); ctx.lineTo(x+w, y+i); ctx.stroke(); }
 }
 
-function drawTurnIndicator() {
-    if (STATE !== 'IDLE' && STATE !== 'AIMING') return;
-    ctx.save();
-    ctx.translate(boundLeft / 2, canvas.height / 2); 
-    ctx.fillStyle = TURN === 1 ? '#00d2ff' : '#ff3333';
-    ctx.beginPath();
-    
-    // Setas indicam o lado que o jogador ATACA
-    if (TURN === 1) { 
-        if (p1Side === 'BOTTOM') { ctx.moveTo(0, -30); ctx.lineTo(20, 10); ctx.lineTo(10, 10); ctx.lineTo(10, 40); ctx.lineTo(-10, 40); ctx.lineTo(-10, 10); ctx.lineTo(-20, 10); } // Seta pra Cima
-        else { ctx.moveTo(0, 30); ctx.lineTo(20, -10); ctx.lineTo(10, -10); ctx.lineTo(10, -40); ctx.lineTo(-10, -40); ctx.lineTo(-10, -10); ctx.lineTo(-20, -10); } // Seta pra Baixo
-    } else { 
-        if (p1Side === 'BOTTOM') { ctx.moveTo(0, 30); ctx.lineTo(20, -10); ctx.lineTo(10, -10); ctx.lineTo(10, -40); ctx.lineTo(-10, -40); ctx.lineTo(-10, -10); ctx.lineTo(-20, -10); } // Seta pra Baixo
-        else { ctx.moveTo(0, -30); ctx.lineTo(20, 10); ctx.lineTo(10, 10); ctx.lineTo(10, 40); ctx.lineTo(-10, 40); ctx.lineTo(-10, 10); ctx.lineTo(-20, 10); } // Seta pra Cima
-    }
-    
-    ctx.closePath(); ctx.fill();
-    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 5;
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
-    ctx.restore();
-}
-
 function drawField() {
     if (fieldType === 0) { const sh = canvas.height / 12; for (let i = 0; i < 13; i++) { ctx.fillStyle = i % 2 === 0 ? '#388E3C' : '#4CAF50'; ctx.fillRect(0, i * sh, canvas.width, sh); } } 
     else if (fieldType === 1) { ctx.fillStyle = '#1b5e20'; ctx.fillRect(0, 0, canvas.width, canvas.height); } 
@@ -988,9 +959,7 @@ function draw() {
 
     for (let gk of goalkeepers) drawButton(gk);
     for (let p of players) drawButton(p);
-    if (STATE !== 'FORMATION' && ball.visible) drawSoccerBall(ball);
-
-    drawTurnIndicator();
+    if (STATE !== 'FORMATION' && STATE !== 'HALFTIME' && ball.visible) drawSoccerBall(ball);
 
     if (STATE === 'AIMING' && selectedPlayer) {
         let dx = dragStart.x - dragCurrent.x; let dy = dragStart.y - dragCurrent.y;
