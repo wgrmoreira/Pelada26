@@ -6,6 +6,7 @@
     <title>Pelada 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* APLICA A FONTE RETRÔ EM TUDO */
         * { font-family: 'Press Start 2P', cursive; box-sizing: border-box; }
         
         body, html {
@@ -65,18 +66,27 @@
 
         .mobile-note { font-size: 8px; color: #fff; text-shadow: 1px 1px 2px #000; position: absolute; bottom: 20px; letter-spacing: 2px;}
 
-        .team-selection { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; max-width: 400px; }
-        .team-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 40%; }
-        .team-label { font-size: 10px; color: white; text-shadow: 2px 2px 4px #000; letter-spacing: 1px; }
+        /* Ajustes Tela de Seleção */
+        #screen-team { justify-content: flex-start; padding-top: 5vh; }
+        .team-group-title { font-size: 10px; margin-top: 15px; margin-bottom: 5px; color: #FFD700; text-shadow: 1px 1px 0 #000; }
+        .team-selection { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 400px; width: 100%; }
+        .team-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 20%; min-width: 75px; }
+        .team-label { font-size: 8px; color: white; text-shadow: 2px 2px 4px #000; text-align: center; }
 
-        .team-btn { width: 70px; height: 70px; border-radius: 50%; border: 4px solid #fff; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.2s; position: relative; }
+        .team-btn { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #fff; cursor: pointer; box-shadow: 0 8px 15px rgba(0,0,0,0.5); transition: transform 0.2s; position: relative; }
         .team-btn:active { transform: scale(0.9); }
         
-        #btn-fla { background: repeating-linear-gradient(180deg, #cc0000, #cc0000 15px, #111 15px, #111 30px); }
-        #btn-vas { background: linear-gradient(135deg, #fff 40%, #111 40%, #111 60%, #fff 60%); border-color: #888; }
-        #btn-flu { background: repeating-linear-gradient(90deg, #006400, #006400 15px, #8B0000 15px, #8B0000 30px); }
+        /* Cores dos Botões HTML Corrigidas para compatibilidade Mobile */
+        #btn-fla { background: repeating-linear-gradient(180deg, #cc0000 0px, #cc0000 12px, #111 12px, #111 24px); }
+        #btn-vas { background: linear-gradient(135deg, #fff 0%, #fff 40%, #111 40%, #111 60%, #fff 60%, #fff 100%); border-color: #888; }
+        #btn-flu { background: repeating-linear-gradient(90deg, #006400 0px, #006400 12px, #8B0000 12px, #8B0000 24px); }
         #btn-bot { background: #111; }
-        #btn-bot::after { content: '★'; color: white; position: absolute; top: 2px; left: 50%; transform: translateX(-50%); font-size: 14px; line-height: 1; font-family: Arial; }
+        #btn-bot::after { content: '★'; color: white; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); font-size: 12px; font-family: Arial; }
+        
+        #btn-cea { background: repeating-linear-gradient(90deg, #111 0px, #111 12px, #fff 12px, #fff 24px); }
+        #btn-vit { background: repeating-linear-gradient(180deg, #cc0000 0px, #cc0000 12px, #111 12px, #111 24px); }
+        #btn-bah { background: linear-gradient(90deg, #cc0000 0%, #cc0000 33.3%, #fff 33.3%, #fff 66.6%, #0000cc 66.6%, #0000cc 100%); }
+        #btn-for { background: linear-gradient(105deg, #0000cc 0%, #0000cc 50%, #cc0000 50%, #cc0000 100%); }
 
         table.standings { width: 90%; max-width: 500px; border-collapse: collapse; margin: 20px 0; background: rgba(0,0,0,0.8); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.5); text-align: center; }
         .standings th { background: #111; color: #FFD700; padding: 10px; font-size: 8px; }
@@ -84,15 +94,8 @@
         .standings tr:last-child td { border-bottom: none; }
         .pos-1 { background: rgba(212, 175, 55, 0.4); }
 
-        #top-bar {
-            position: absolute; top: 15px; width: 90%; left: 5%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 10; pointer-events: none;
-        }
-        .hud-panel {
-            background: rgba(0, 0, 0, 0.6); padding: 8px 12px; border-radius: 5px;
-            font-size: 10px; color: #fff; text-shadow: 2px 2px 4px #000; border: 1px solid rgba(255,255,255,0.2);
-        }
+        #top-bar { position: absolute; top: 15px; width: 90%; left: 5%; display: flex; justify-content: space-between; align-items: center; z-index: 10; pointer-events: none; }
+        .hud-panel { background: rgba(0, 0, 0, 0.6); padding: 8px 12px; border-radius: 5px; font-size: 12px; color: #fff; text-shadow: 2px 2px 4px #000; border: 1px solid rgba(255,255,255,0.2); }
 
         button.btn-game { background: linear-gradient(45deg, #00d2ff 0%, #3a7bd5 100%); border: 2px solid #fff; border-radius: 10px; padding: 15px; font-size: 10px; color: white; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); margin: 8px; }
         #btn-confirm-formation { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 10; font-size: 12px;}
@@ -172,6 +175,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 let audioCtx;
 
+// Áudios Externos
 const audioMenu = new Audio('assets/music/telas.mp3'); audioMenu.loop = true;
 const audioGame = new Audio('assets/music/jogotodo.mp3'); audioGame.loop = true;
 const audioDefesa = new Audio('assets/music/defesa.mp3');
@@ -205,7 +209,6 @@ let lastTouchTeam = 0;
 let lastPlayerToTouchBall = null; 
 let celebrationTarget = null;
 let isOwnGoalCelebration = false;
-let currentAds = [];
 
 let currentRound = 0; let schedule = []; let standings = [];
 
@@ -215,7 +218,6 @@ function requestFullScreen() {
     else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen().catch(e=>{}); }
 }
 
-// ================= SISTEMA DE ÁUDIO SINTÉTICO =================
 function initAudio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -259,6 +261,7 @@ function playCrowdCheer() {
 
 function playKick() { playTone(100, 'triangle', 0.2, 1); playTone(150, 'square', 0.1, 0.5); }
 function playBounce() { playTone(300, 'sine', 0.1, 0.2); }
+
 function playWhistle() { playTone(1200, 'sine', 0.4, 0.5); setTimeout(()=>playTone(1400, 'sine', 0.6, 0.6), 200); }
 function playDoubleWhistle() { playWhistle(); setTimeout(playWhistle, 800); }
 function playTripleWhistle() { playWhistle(); setTimeout(playWhistle, 800); setTimeout(playWhistle, 1600); }
@@ -342,7 +345,7 @@ function reloadGame() {
     setTimeout(() => { location.reload(); }, 200);
 }
 
-// ================= BALÃO TEXTO "COMIC" =================
+// ================= BALÃO TEXTO "COMIC" / "PRESS START" =================
 function showPopup(text, duration = 120, isRetro = false) {
     popup.text = text; 
     popup.timer = duration; 
@@ -388,8 +391,6 @@ function updateHUD() {
     let secs = (currentTime % 1) === 0.5 ? "30" : "00";
     let displayMins = mins < 10 ? "0" + mins : mins;
     document.getElementById('clock-text').innerText = currentHalf + "T " + displayMins + ":" + secs;
-    
-    // Placar Dinâmico: P1 na Esquerda x AI na Direita
     document.getElementById('score-text').innerText = `${playerTeamType} ${scoreP1} x ${scoreAI} ${aiTeamType}`;
 }
 
@@ -538,19 +539,6 @@ function setupInitialMatch() {
     currentHalf = 1; currentTime = 0; extraTime = Math.floor(Math.random() * 5) + 1; p1Side = 'BOTTOM';
     updateHUD();
     
-    // Constrói Array de Propagandas Laterais
-    let p1C = getTeamColors(playerTeamType);
-    let aiC = getTeamColors(aiTeamType);
-    currentAds = [
-        { text: playerTeamType, bg: p1C[0], fg: p1C[1] },
-        { text: "BEBA TOCA COLA", bg: "#e60000", fg: "#ffffff" },
-        { text: aiTeamType, bg: aiC[0], fg: aiC[1] },
-        { text: "MAC DONALDI", bg: "#da291c", fg: "#ffc72c" },
-        { text: "CATÁLOGO DE GAMES", bg: "#111111", fg: "#00ff00" },
-        { text: "PS6", bg: "#003399", fg: "#ffffff" },
-        { text: "XBOX", bg: "#107c10", fg: "#ffffff" }
-    ];
-
     fieldType = Math.floor(Math.random() * 3); 
     const cw = canvas.width; const ch = canvas.height;
     
@@ -571,6 +559,7 @@ function setupInitialMatch() {
 
     setupPositionsForHalf();
     startFormationPhase();
+    playWhistle();
 }
 
 function getTopArea() { return { minX: canvas.width/2 - goalWidth/2 + ball.r, maxX: canvas.width/2 + goalWidth/2 - ball.r, minY: boundTop + ball.r, maxY: boundTop + fieldH * 0.1 - ball.r }; }
@@ -1074,51 +1063,6 @@ function drawTurnIndicator() {
     ctx.restore();
 }
 
-function drawAdStrip(offset, adW, boardH, maxLen) {
-    ctx.font = `bold ${Math.max(6, boardH * 0.6)}px 'Press Start 2P', cursive`;
-    ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
-    
-    let numAdsToDraw = Math.ceil(maxLen / adW) + 2;
-    let startIndex = Math.floor(offset / adW);
-    let localOffset = offset % adW;
-    
-    ctx.save(); ctx.beginPath(); ctx.rect(0, -boardH/2, maxLen, boardH); ctx.clip();
-
-    for (let i = 0; i < numAdsToDraw; i++) {
-        let adIdx = (startIndex + i) % currentAds.length;
-        let ad = currentAds[adIdx];
-        let drawX = (i * adW) - localOffset;
-        
-        ctx.fillStyle = ad.bg; ctx.fillRect(drawX, -boardH/2, adW, boardH);
-        ctx.strokeStyle = '#222'; ctx.lineWidth = 2; ctx.strokeRect(drawX, -boardH/2, adW, boardH);
-        ctx.fillStyle = ad.fg; ctx.fillText(ad.text, drawX + adW/2, 0);
-    }
-    ctx.restore();
-}
-
-function drawAdBoards() {
-    if (!currentAds || currentAds.length === 0) return;
-    
-    let adW = canvas.height * 0.4; 
-    let totalW = currentAds.length * adW;
-    let offset = (Date.now() / 20) % totalW; 
-    let boardH = boundLeft * 0.6; 
-    
-    // Left Board
-    ctx.save();
-    ctx.translate(boundLeft / 2, boundTop);
-    ctx.rotate(Math.PI / 2);
-    drawAdStrip(offset, adW, boardH, fieldH);
-    ctx.restore();
-    
-    // Right Board
-    ctx.save();
-    ctx.translate(boundRight + boundLeft / 2, boundBottom);
-    ctx.rotate(-Math.PI / 2);
-    drawAdStrip(offset, adW, boardH, fieldH);
-    ctx.restore();
-}
-
 function drawField() {
     if (fieldType === 0) { const sh = canvas.height / 12; for (let i = 0; i < 13; i++) { ctx.fillStyle = i % 2 === 0 ? '#388E3C' : '#4CAF50'; ctx.fillRect(0, i * sh, canvas.width, sh); } } 
     else if (fieldType === 1) { ctx.fillStyle = '#1b5e20'; ctx.fillRect(0, 0, canvas.width, canvas.height); } 
@@ -1138,8 +1082,6 @@ function drawField() {
     let ml = areaW * 0.35; ctx.beginPath(); ctx.arc(canvas.width/2, boundTop + areaH, ml, 0, Math.PI); ctx.stroke(); ctx.beginPath(); ctx.arc(canvas.width/2, boundBottom - areaH, ml, Math.PI, Math.PI*2); ctx.stroke();
     const cr = fieldW * 0.05; ctx.beginPath(); ctx.arc(boundLeft, boundTop, cr, 0, Math.PI/2); ctx.stroke(); ctx.beginPath(); ctx.arc(boundRight, boundTop, cr, Math.PI/2, Math.PI); ctx.stroke(); ctx.beginPath(); ctx.arc(boundRight, boundBottom, cr, Math.PI, Math.PI*1.5); ctx.stroke(); ctx.beginPath(); ctx.arc(boundLeft, boundBottom, cr, Math.PI*1.5, Math.PI*2); ctx.stroke();
     
-    drawAdBoards();
-
     ctx.save();
     ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8; ctx.shadowOffsetX = 5; ctx.shadowOffsetY = 5;
     ctx.fillStyle = '#FFFFFF'; 
