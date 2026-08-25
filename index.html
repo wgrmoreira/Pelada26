@@ -6,6 +6,7 @@
     <title>Pelada 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* APLICA A FONTE RETRÔ EM TUDO */
         * { font-family: 'Press Start 2P', cursive; box-sizing: border-box; }
         
         body, html {
@@ -65,18 +66,33 @@
 
         .mobile-note { font-size: 8px; color: #fff; text-shadow: 1px 1px 2px #000; position: absolute; bottom: 20px; letter-spacing: 2px;}
 
-        .team-selection { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; max-width: 400px; }
-        .team-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 40%; }
-        .team-label { font-size: 10px; color: white; text-shadow: 2px 2px 4px #000; letter-spacing: 1px; }
+        /* Ajustes Tela de Seleção */
+        #screen-team { justify-content: flex-start; padding-top: 5vh; }
+        .team-group-title { font-size: 10px; margin-top: 15px; margin-bottom: 5px; color: #FFD700; text-shadow: 1px 1px 0 #000; }
+        .team-selection { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 400px; width: 100%; }
+        .team-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 20%; min-width: 75px; }
+        .team-label { font-size: 8px; color: white; text-shadow: 2px 2px 4px #000; text-align: center; }
 
-        .team-btn { width: 70px; height: 70px; border-radius: 50%; border: 4px solid #fff; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.2s; position: relative; }
+        .team-btn { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #fff; cursor: pointer; box-shadow: 0 8px 15px rgba(0,0,0,0.5); transition: transform 0.2s; position: relative; }
         .team-btn:active { transform: scale(0.9); }
         
-        #btn-fla { background: repeating-linear-gradient(180deg, #cc0000, #cc0000 15px, #111 15px, #111 30px); }
+        /* Cores dos Botões HTML */
+        #btn-fla { background: repeating-linear-gradient(180deg, #cc0000, #cc0000 12px, #111 12px, #111 24px); }
         #btn-vas { background: linear-gradient(135deg, #fff 40%, #111 40%, #111 60%, #fff 60%); border-color: #888; }
-        #btn-flu { background: repeating-linear-gradient(90deg, #006400, #006400 15px, #8B0000 15px, #8B0000 30px); }
+        #btn-flu { background: repeating-linear-gradient(90deg, #006400, #006400 12px, #8B0000 12px, #8B0000 24px); }
         #btn-bot { background: #111; }
-        #btn-bot::after { content: '★'; color: white; position: absolute; top: 2px; left: 50%; transform: translateX(-50%); font-size: 14px; line-height: 1; font-family: Arial; }
+        #btn-bot::after { content: '★'; color: white; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); font-size: 12px; font-family: Arial; }
+        
+        #btn-cea { background: repeating-linear-gradient(90deg, #111, #111 12px, #fff 12px, #fff 24px); }
+        #btn-vit { background: repeating-linear-gradient(180deg, #cc0000, #cc0000 12px, #111 12px, #111 24px); }
+        #btn-bah { background: linear-gradient(90deg, #cc0000 33%, #fff 33%, #fff 67%, #0000cc 67%); }
+        /* Design do Fortaleza usando Pseudo-elemento */
+        #btn-for { background: #ffffff; position: relative; overflow: hidden; }
+        #btn-for::before {
+            content: ''; position: absolute; top: 30%; left: 15%; right: 15%; bottom: 10%;
+            background: linear-gradient(to right, #0000cc 50%, #cc0000 50%);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
 
         table.standings { width: 90%; max-width: 500px; border-collapse: collapse; margin: 20px 0; background: rgba(0,0,0,0.8); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.5); text-align: center; }
         .standings th { background: #111; color: #FFD700; padding: 10px; font-size: 8px; }
@@ -84,15 +100,8 @@
         .standings tr:last-child td { border-bottom: none; }
         .pos-1 { background: rgba(212, 175, 55, 0.4); }
 
-        #top-bar {
-            position: absolute; top: 15px; width: 90%; left: 5%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 10; pointer-events: none;
-        }
-        .hud-panel {
-            background: rgba(0, 0, 0, 0.6); padding: 8px 12px; border-radius: 5px;
-            font-size: 12px; color: #fff; text-shadow: 2px 2px 4px #000; border: 1px solid rgba(255,255,255,0.2);
-        }
+        #top-bar { position: absolute; top: 15px; width: 90%; left: 5%; display: flex; justify-content: space-between; align-items: center; z-index: 10; pointer-events: none; }
+        .hud-panel { background: rgba(0, 0, 0, 0.6); padding: 8px 12px; border-radius: 5px; font-size: 12px; color: #fff; text-shadow: 2px 2px 4px #000; border: 1px solid rgba(255,255,255,0.2); }
 
         button.btn-game { background: linear-gradient(45deg, #00d2ff 0%, #3a7bd5 100%); border: 2px solid #fff; border-radius: 10px; padding: 15px; font-size: 10px; color: white; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); margin: 8px; }
         #btn-confirm-formation { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 10; font-size: 12px;}
@@ -112,18 +121,29 @@
             <div class="retro-menu-header">MODE SELECT</div>
             <div class="retro-menu-body">
                 <button class="retro-menu-btn" onclick="goToTeamSelect('QUICK')">AMISTOSO</button>
-                <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP')">CAMPEONATO CARIOCA</button>
+                <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_CAR')">CAMPEONATO CARIOCA</button>
+                <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_NOR')">COPA DO NORDESTE</button>
             </div>
         </div>
     </div>
 
     <div id="screen-team" class="screen hidden">
         <h2 class="retro-title">ESCOLHA SEU TIME</h2>
-        <div class="team-selection">
-            <div class="team-wrapper"><div id="btn-fla" class="team-btn" onclick="selectTeam('FLA')"></div><div class="team-label">FLAMENGO</div></div>
-            <div class="team-wrapper"><div id="btn-vas" class="team-btn" onclick="selectTeam('VAS')"></div><div class="team-label">VASCO</div></div>
-            <div class="team-wrapper"><div id="btn-flu" class="team-btn" onclick="selectTeam('FLU')"></div><div class="team-label">FLUMINENSE</div></div>
-            <div class="team-wrapper"><div id="btn-bot" class="team-btn" onclick="selectTeam('BOT')"></div><div class="team-label">BOTAFOGO</div></div>
+        
+        <h3 id="label-carioca" class="team-group-title">CARIOCA</h3>
+        <div id="group-carioca" class="team-selection">
+            <div class="team-wrapper"><div id="btn-fla" class="team-btn" onclick="selectTeam('FLA')"></div><div class="team-label">FLA</div></div>
+            <div class="team-wrapper"><div id="btn-vas" class="team-btn" onclick="selectTeam('VAS')"></div><div class="team-label">VAS</div></div>
+            <div class="team-wrapper"><div id="btn-flu" class="team-btn" onclick="selectTeam('FLU')"></div><div class="team-label">FLU</div></div>
+            <div class="team-wrapper"><div id="btn-bot" class="team-btn" onclick="selectTeam('BOT')"></div><div class="team-label">BOT</div></div>
+        </div>
+
+        <h3 id="label-nordeste" class="team-group-title">NORDESTE</h3>
+        <div id="group-nordeste" class="team-selection">
+            <div class="team-wrapper"><div id="btn-cea" class="team-btn" onclick="selectTeam('CEA')"></div><div class="team-label">CEARÁ</div></div>
+            <div class="team-wrapper"><div id="btn-vit" class="team-btn" onclick="selectTeam('VIT')"></div><div class="team-label">VITÓRIA</div></div>
+            <div class="team-wrapper"><div id="btn-bah" class="team-btn" onclick="selectTeam('BAH')"></div><div class="team-label">BAHIA</div></div>
+            <div class="team-wrapper"><div id="btn-for" class="team-btn" onclick="selectTeam('FOR')"></div><div class="team-label">FORTALEZA</div></div>
         </div>
     </div>
 
@@ -161,7 +181,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 let audioCtx;
 
-// Áudios Externos (MP3)
+// Áudios Externos
 const audioMenu = new Audio('assets/music/telas.mp3'); audioMenu.loop = true;
 const audioGame = new Audio('assets/music/jogotodo.mp3'); audioGame.loop = true;
 const audioDefesa = new Audio('assets/music/defesa.mp3');
@@ -173,7 +193,7 @@ let TURN = 1; let nextTurn = 1;
 let scoreP1 = 0; let scoreAI = 0;
 let playerTeamType = 'FLA'; let aiTeamType = 'VAS';
 let scoringTeam = 0; let fieldType = 0; 
-let startClicks = 0; // Controle para o duplo clique inicial
+let startClicks = 0; 
 
 // Variáveis de Tempo e Lados
 let currentHalf = 1; 
@@ -202,7 +222,6 @@ function requestFullScreen() {
     else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen().catch(e=>{}); }
 }
 
-// ================= SISTEMA DE ÁUDIO =================
 function initAudio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -247,7 +266,6 @@ function playCrowdCheer() {
 function playKick() { playTone(100, 'triangle', 0.2, 1); playTone(150, 'square', 0.1, 0.5); }
 function playBounce() { playTone(300, 'sine', 0.1, 0.2); }
 
-// Sistema de Apitos
 function playWhistle() { playTone(1200, 'sine', 0.4, 0.5); setTimeout(()=>playTone(1400, 'sine', 0.6, 0.6), 200); }
 function playDoubleWhistle() { playWhistle(); setTimeout(playWhistle, 800); }
 function playTripleWhistle() { playWhistle(); setTimeout(playWhistle, 800); setTimeout(playWhistle, 1600); }
@@ -291,6 +309,22 @@ function goToTeamSelect(mode) {
     playClickSound(); gameMode = mode;
     document.getElementById('screen-mode').classList.add('hidden');
     document.getElementById('screen-team').classList.remove('hidden');
+
+    const gCar = document.getElementById('group-carioca');
+    const gNor = document.getElementById('group-nordeste');
+    const lCar = document.getElementById('label-carioca');
+    const lNor = document.getElementById('label-nordeste');
+
+    if (mode === 'QUICK') {
+        gCar.style.display = 'flex'; gNor.style.display = 'flex';
+        lCar.style.display = 'block'; lNor.style.display = 'block';
+    } else if (mode === 'CAMP_CAR') {
+        gCar.style.display = 'flex'; gNor.style.display = 'none';
+        lCar.style.display = 'none'; lNor.style.display = 'none';
+    } else if (mode === 'CAMP_NOR') {
+        gCar.style.display = 'none'; gNor.style.display = 'flex';
+        lCar.style.display = 'none'; lNor.style.display = 'none';
+    }
 }
 
 function selectTeam(team) {
@@ -300,9 +334,10 @@ function selectTeam(team) {
     audioMenu.pause(); audioMenu.currentTime = 0; 
     audioGame.play().catch(e=>{}); 
 
-    if (gameMode === 'CAMP') initTournament();
+    if (gameMode.startsWith('CAMP')) initTournament();
     else {
-        let teamsList = ['FLA', 'VAS', 'FLU', 'BOT']; teamsList.splice(teamsList.indexOf(team), 1);
+        let teamsList = ['FLA', 'VAS', 'FLU', 'BOT', 'CEA', 'VIT', 'BAH', 'FOR']; 
+        teamsList.splice(teamsList.indexOf(team), 1);
         aiTeamType = teamsList[Math.floor(Math.random() * teamsList.length)];
         document.getElementById('ui-game').classList.remove('hidden'); setupInitialMatch();
     }
@@ -343,7 +378,7 @@ function drawPopup() {
             
             ctx.scale(scale, scale);
             ctx.rotate(-0.05); 
-            ctx.font = "italic 900 34px 'Impact', 'Arial Black', sans-serif";
+            ctx.font = "italic 900 28px 'Impact', 'Arial Black', sans-serif"; // Fonte reduzida em 15% (era 34)
             ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 10; ctx.shadowOffsetX = 5; ctx.shadowOffsetY = 5;
             ctx.lineWidth = 8; ctx.strokeStyle = '#000000'; ctx.strokeText(popup.text, 0, 0);
@@ -407,7 +442,7 @@ function endOfMatch() {
 
 // ================= CAMPEONATO =================
 function initTournament() {
-    let teams = ['FLA', 'VAS', 'FLU', 'BOT'];
+    let teams = gameMode === 'CAMP_CAR' ? ['FLA', 'VAS', 'FLU', 'BOT'] : ['CEA', 'VIT', 'BAH', 'FOR'];
     standings = teams.map(t => ({ id: t, p: 0, j: 0, v: 0, d: 0, gp: 0, gc: 0, sg: 0 }));
     let outros = teams.filter(t => t !== playerTeamType);
     let t0 = playerTeamType, t1 = outros[0], t2 = outros[1], t3 = outros[2];
@@ -480,8 +515,20 @@ function finishTournament() {
 }
 
 // ================= JOGO =================
-function getGKColor(tName) { if(tName === 'FLA') return '#FFD700'; if(tName === 'VAS') return '#888888'; if(tName === 'FLU') return '#0000FF'; if(tName === 'BOT') return '#FFFFFF'; return '#FFD700'; }
-function getTeamColors(tName) { if(tName === 'FLA') return ['#ff0000', '#000000']; if(tName === 'VAS') return ['#ffffff', '#000000']; if(tName === 'FLU') return ['#006400', '#8B0000']; if(tName === 'BOT') return ['#ffffff', '#000000']; return ['#ffffff', '#000000']; }
+function getGKColor(tName) { 
+    if(tName === 'FLA') return '#FFD700'; if(tName === 'VAS') return '#888888'; 
+    if(tName === 'FLU') return '#0000FF'; if(tName === 'BOT') return '#FFFFFF'; 
+    if(tName === 'CEA') return '#FFFFFF'; if(tName === 'VIT') return '#111111'; 
+    if(tName === 'BAH') return '#90EE90'; if(tName === 'FOR') return '#cc0000';
+    return '#FFD700'; 
+}
+function getTeamColors(tName) { 
+    if(tName === 'FLA') return ['#ff0000', '#000000']; if(tName === 'VAS') return ['#ffffff', '#000000']; 
+    if(tName === 'FLU') return ['#006400', '#8B0000']; if(tName === 'BOT') return ['#ffffff', '#000000']; 
+    if(tName === 'CEA') return ['#000000', '#ffffff']; if(tName === 'VIT') return ['#cc0000', '#000000']; 
+    if(tName === 'BAH') return ['#ffffff', '#0000cc']; if(tName === 'FOR') return ['#ffffff', '#cc0000'];
+    return ['#ffffff', '#000000']; 
+}
 function getUniqueNumbers(count) {
     let nums = [2,3,4,5,6,7,8,9,10,11];
     for (let i = nums.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [nums[i], nums[j]] = [nums[j], nums[i]]; }
@@ -513,6 +560,7 @@ function setupInitialMatch() {
 
     setupPositionsForHalf();
     startFormationPhase();
+    playWhistle();
 }
 
 function getTopArea() { return { minX: canvas.width/2 - goalWidth/2 + ball.r, maxX: canvas.width/2 + goalWidth/2 - ball.r, minY: boundTop + ball.r, maxY: boundTop + fieldH * 0.1 - ball.r }; }
@@ -536,7 +584,7 @@ function setupPositionsForHalf() {
 function startFormationPhase() {
     STATE = 'FORMATION';
     ball.x = canvas.width / 2; ball.y = canvas.height / 2; ball.vx = 0; ball.vy = 0; ball.visible = true;
-    lastTouchTeam = 0; celebrationTarget = null;
+    celebrationTarget = null;
     
     let aiIdx = 0; let p1Idx = 0;
     const cw = canvas.width;
@@ -634,7 +682,14 @@ function pointerUp(e) {
     if (STATE === 'DRAGGING') { STATE = 'FORMATION'; selectedPlayer = null; } 
     else if (STATE === 'AIMING') {
         let dx = dragStart.x - dragCurrent.x; let dy = dragStart.y - dragCurrent.y;
-        let dist = Math.hypot(dx, dy); let maxDist = 60; 
+        let dist = Math.hypot(dx, dy); 
+        
+        // SISTEMA DE CANCELAR
+        if (dist <= 20) {
+            selectedPlayer = null; STATE = 'IDLE'; return;
+        }
+        
+        let maxDist = 60; 
         if (dist > maxDist) { dx = (dx / dist) * maxDist; dy = (dy / dist) * maxDist; }
         let powerMult = 28 / maxDist;
         if (dist > 5) { playKick(); ballTouched = false; lastShotY = ball.y; advanceTime(); } 
@@ -651,6 +706,8 @@ function resolveCollision(c1, c2) {
         
         if (c1 === ball || c2 === ball) {
             ballTouched = true;
+            let playerPiece = c1 === ball ? c2 : c1;
+            lastPlayerToTouchBall = playerPiece;
         }
 
         if ((c1 === ball && c2.isGK) || (c2 === ball && c1.isGK)) {
@@ -718,8 +775,12 @@ function updatePhysics() {
             if (e.y - e.r < boundTop) { 
                 if (e.x > canvas.width/2 - goalWidth/2 && e.x < canvas.width/2 + goalWidth/2) {
                     if (STATE !== 'SCORED') { 
-                        if(p1Side === 'BOTTOM') { scoreP1++; scoringTeam = 1; processGoal(); }
-                        else { scoreAI++; scoringTeam = 2; processGoal(); }
+                        let isP1Goal = p1Side === 'BOTTOM';
+                        let isOwnGoal = (isP1Goal && TURN !== 1) || (!isP1Goal && TURN !== 2);
+                        
+                        if (isP1Goal) { scoreP1++; scoringTeam = 1; }
+                        else { scoreAI++; scoringTeam = 2; }
+                        processGoal(isOwnGoal);
                     } 
                     e.vx = 0; e.vy = 0; e.visible = false; 
                 } else { e.y = boundTop + e.r; e.vy *= -0.8; playBounce(); }
@@ -727,8 +788,12 @@ function updatePhysics() {
             if (e.y + e.r > boundBottom) { 
                 if (e.x > canvas.width/2 - goalWidth/2 && e.x < canvas.width/2 + goalWidth/2) {
                     if (STATE !== 'SCORED') { 
-                        if(p1Side === 'BOTTOM') { scoreAI++; scoringTeam = 2; processGoal(); }
-                        else { scoreP1++; scoringTeam = 1; processGoal(); }
+                        let isP1Goal = p1Side === 'TOP';
+                        let isOwnGoal = (isP1Goal && TURN !== 1) || (!isP1Goal && TURN !== 2);
+
+                        if (isP1Goal) { scoreP1++; scoringTeam = 1; }
+                        else { scoreAI++; scoringTeam = 2; }
+                        processGoal(isOwnGoal);
                     } 
                     e.vx = 0; e.vy = 0; e.visible = false;
                 } else { e.y = boundBottom - e.r; e.vy *= -0.8; playBounce(); }
@@ -753,33 +818,40 @@ function updatePhysics() {
     }
 }
 
-function processGoal() {
-    let isOwnGoal = (scoringTeam !== TURN);
+function processGoal(isOwnGoal) {
     STATE = 'SCORED'; playWhistle(); playCrowdCheer();
     document.getElementById('score-text').innerText = scoreAI + " x " + scoreP1;
     
     let waitTime = 4500; 
-    
+    let scoringTeamName = scoringTeam === 1 ? playerTeamType : aiTeamType;
+
     if (isOwnGoal) {
         showPopup("GOL CONTRA!", 300, false);
     } else {
-        let isGolaco = false;
-        if (p1Side === 'BOTTOM') {
-            if (scoringTeam === 1 && lastShotY > canvas.height / 2) isGolaco = true;
-            if (scoringTeam === 2 && lastShotY < canvas.height / 2) isGolaco = true;
+        if (scoringTeamName === 'BAH') {
+            showPopup("BAHIA MINHA POHA", 300, false);
         } else {
-            if (scoringTeam === 1 && lastShotY < canvas.height / 2) isGolaco = true;
-            if (scoringTeam === 2 && lastShotY > canvas.height / 2) isGolaco = true;
+            let isGolaco = false;
+            if (p1Side === 'BOTTOM') {
+                if (scoringTeam === 1 && lastShotY > canvas.height / 2) isGolaco = true;
+                if (scoringTeam === 2 && lastShotY < canvas.height / 2) isGolaco = true;
+            } else {
+                if (scoringTeam === 1 && lastShotY < canvas.height / 2) isGolaco = true;
+                if (scoringTeam === 2 && lastShotY > canvas.height / 2) isGolaco = true;
+            }
+            
+            if (isGolaco) showPopup("GOLAAAAÇOOOO!", 300, false);
+            else showPopup("GOLLLLLLLLLLLLL!", 300, false);
         }
-        
-        if (isGolaco) showPopup("GOLAAAAÇOOOO!", 300, false);
-        else showPopup("GOLLLLLLLLLLLLL!", 300, false);
     }
 
     fireworksTimer = 300; nextTurn = scoringTeam === 1 ? 2 : 1; 
+    
+    celebrationTarget = lastPlayerToTouchBall;
     isOwnGoalCelebration = isOwnGoal;
 
     setTimeout(() => {
+        celebrationTarget = null;
         if (checkTimeEnd()) return;
         startFormationPhase();
     }, waitTime); 
@@ -875,6 +947,17 @@ function drawButton(p) {
     else if (tName === 'VAS') { ctx.fillStyle = '#f0f0f0'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2); ctx.translate(p.x, p.y); ctx.rotate(Math.PI / 4); ctx.fillStyle = '#111111'; ctx.fillRect(-p.r, -p.r * 0.25, p.r * 2, p.r * 0.5); ctx.rotate(-Math.PI / 4); ctx.translate(-p.x, -p.y); } 
     else if (tName === 'FLU') { for (let i = 0; i < 5; i++) { ctx.fillStyle = (i % 2 === 0) ? '#006400' : '#8B0000'; ctx.fillRect(p.x - p.r + (i * (p.r * 2) / 5), p.y - p.r, (p.r * 2) / 5, p.r * 2); } } 
     else if (tName === 'BOT') { ctx.fillStyle = '#111111'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2); drawStar(p.x, p.y - p.r * 0.45, 5, p.r * 0.2, p.r * 0.08, '#FFFFFF'); }
+    else if (tName === 'CEA') { for (let i = 0; i < 5; i++) { ctx.fillStyle = (i % 2 === 0) ? '#000000' : '#ffffff'; ctx.fillRect(p.x - p.r + (i * (p.r * 2) / 5), p.y - p.r, (p.r * 2) / 5, p.r * 2); } }
+    else if (tName === 'VIT') { for (let i = 0; i < 5; i++) { ctx.fillStyle = (i % 2 === 0) ? '#cc0000' : '#000000'; ctx.fillRect(p.x - p.r, p.y - p.r + (i * (p.r * 2) / 5), p.r * 2, (p.r * 2) / 5); } }
+    else if (tName === 'BAH') { ctx.fillStyle = '#cc0000'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2 * 0.33, p.r * 2); ctx.fillStyle = '#ffffff'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.33, p.y - p.r, p.r * 2 * 0.34, p.r * 2); ctx.fillStyle = '#0000cc'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.67, p.y - p.r, p.r * 2 * 0.33, p.r * 2); }
+    else if (tName === 'FOR') { 
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2); 
+        ctx.save();
+        ctx.beginPath(); ctx.moveTo(p.x - p.r*0.7, p.y - p.r*0.3); ctx.lineTo(p.x + p.r*0.7, p.y - p.r*0.3); ctx.lineTo(p.x, p.y + p.r*0.7); ctx.closePath(); ctx.clip();
+        ctx.fillStyle = '#0000cc'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r, p.r * 2); 
+        ctx.fillStyle = '#cc0000'; ctx.fillRect(p.x, p.y - p.r, p.r, p.r * 2); 
+        ctx.restore();
+    }
     
     let grad = ctx.createRadialGradient(p.x - p.r * 0.3, p.y - p.r * 0.3, p.r * 0.1, p.x, p.y, p.r);
     grad.addColorStop(0, 'rgba(255, 255, 255, 0.7)'); grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)'); grad.addColorStop(1, 'rgba(0, 0, 0, 0.4)');
@@ -882,10 +965,14 @@ function drawButton(p) {
     ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.strokeStyle = '#444'; ctx.lineWidth = 1.5; ctx.stroke();
 
     if (p.num) {
-        let txtCol = '#FFFFFF'; if (p.isGK) txtCol = '#000'; else if (tName === 'VAS') txtCol = '#FF0000';
+        let txtCol = '#FFFFFF'; 
+        if (p.isGK) txtCol = '#000'; 
+        else if (tName === 'VAS' || tName === 'CEA' || tName === 'FOR') txtCol = '#FF0000';
+        else if (tName === 'BAH') txtCol = '#000000';
+        
         ctx.fillStyle = txtCol; ctx.strokeStyle = '#000000'; ctx.lineWidth = p.isGK ? 1.5 : 3;
-        ctx.font = `bold ${p.r * 0.7}px Arial`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        let numY = (tName === 'BOT' && !p.isGK) ? p.r * 0.2 : 0;
+        ctx.font = `${p.r * 0.8}px 'Press Start 2P', cursive`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        let numY = (tName === 'BOT' && !p.isGK) ? p.r * 0.3 : p.r * 0.1;
         if(!p.isGK) ctx.strokeText(p.num, p.x, p.y + numY); ctx.fillText(p.num, p.x, p.y + numY);
     }
 }
@@ -995,9 +1082,18 @@ function draw() {
 
     if (STATE === 'AIMING' && selectedPlayer) {
         let dx = dragStart.x - dragCurrent.x; let dy = dragStart.y - dragCurrent.y;
-        ctx.beginPath(); ctx.moveTo(selectedPlayer.x, selectedPlayer.y); ctx.lineTo(selectedPlayer.x + dx, selectedPlayer.y + dy);
-        let force = Math.min(Math.hypot(dx, dy), 60); ctx.strokeStyle = force > 40 ? '#ff3333' : force > 20 ? '#ffff33' : '#ffffff';
-        ctx.lineWidth = 4; ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
+        let dist = Math.hypot(dx, dy); 
+        
+        if (dist <= 20) {
+            ctx.font = "8px 'Press Start 2P', cursive"; ctx.fillStyle = "#fff"; ctx.textAlign = "center";
+            ctx.shadowColor = '#000'; ctx.shadowBlur = 4;
+            ctx.fillText("CANCELAR", selectedPlayer.x, selectedPlayer.y - selectedPlayer.r - 15);
+            ctx.shadowColor = 'transparent';
+        } else {
+            ctx.beginPath(); ctx.moveTo(selectedPlayer.x, selectedPlayer.y); ctx.lineTo(selectedPlayer.x + dx, selectedPlayer.y + dy);
+            let force = Math.min(dist, 60); ctx.strokeStyle = force > 40 ? '#ff3333' : force > 20 ? '#ffff33' : '#ffffff';
+            ctx.lineWidth = 4; ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
+        }
     } else if (STATE === 'DRAGGING' && selectedPlayer) {
         ctx.beginPath(); ctx.arc(selectedPlayer.x, selectedPlayer.y, selectedPlayer.r + 5, 0, Math.PI*2);
         ctx.strokeStyle = '#00d2ff'; ctx.lineWidth = 3; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
