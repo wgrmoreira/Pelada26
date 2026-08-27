@@ -82,26 +82,31 @@
 
         .team-btn { width: 55px; height: 55px; border-radius: 50%; border: 3px solid #ddd; cursor: pointer; box-shadow: 0 10px 15px rgba(0,0,0,0.8); transition: transform 0.2s; position: relative; overflow: hidden; }
         .team-btn:active { transform: scale(0.9); }
+        .team-btn.selected-p1 { border-color: #C0A020; transform: scale(1.15); box-shadow: 0 0 15px #C0A020; }
+        .team-btn.selected-ai { border-color: #ff3333; transform: scale(1.05); }
+        .team-btn.disabled { opacity: 0.3; pointer-events: none; }
         
-        /* Cores dos Botões HTML */
-        #btn-fla { background: repeating-linear-gradient(180deg, #A32020 0px, #A32020 11px, #1a1a1a 11px, #1a1a1a 22px); }
-        #btn-vas { background: linear-gradient(135deg, #e0e0e0 0%, #e0e0e0 40%, #1a1a1a 40%, #1a1a1a 60%, #e0e0e0 60%, #e0e0e0 100%); border-color: #666; }
-        #btn-flu { background: repeating-linear-gradient(90deg, #1B5E20 0px, #1B5E20 9px, #fff 9px, #fff 11px, #7F0000 11px, #7F0000 20px, #fff 20px, #fff 22px); }
-        #btn-bot { background: #1a1a1a; }
-        #btn-bot::after { content: '★'; color: #e0e0e0; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); font-size: 10px; font-family: Arial; }
+        /* Cores dos Botões via Classes para funcionar na clonagem */
+        .btn-fla { background: repeating-linear-gradient(180deg, #A32020 0px, #A32020 11px, #1a1a1a 11px, #1a1a1a 22px); }
+        .btn-vas { background: linear-gradient(135deg, #e0e0e0 0%, #e0e0e0 40%, #1a1a1a 40%, #1a1a1a 60%, #e0e0e0 60%, #e0e0e0 100%); border-color: #666; }
+        .btn-flu { background: repeating-linear-gradient(90deg, #1B5E20 0px, #1B5E20 9px, #fff 9px, #fff 11px, #7F0000 11px, #7F0000 20px, #fff 20px, #fff 22px); }
+        .btn-bot { background: #1a1a1a; }
+        .btn-bot::after { content: '★'; color: #e0e0e0; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); font-size: 10px; font-family: Arial; }
         
-        #btn-cea { background: repeating-linear-gradient(90deg, #1a1a1a 0px, #1a1a1a 11px, #e0e0e0 11px, #e0e0e0 22px); }
-        #btn-vit { background: repeating-linear-gradient(180deg, #A32020 0px, #A32020 11px, #1a1a1a 11px, #1a1a1a 22px); }
-        #btn-bah { background: linear-gradient(90deg, #A32020 0%, #A32020 33.3%, #e0e0e0 33.3%, #e0e0e0 66.6%, #283593 66.6%, #283593 100%); }
-        #btn-for { background: linear-gradient(105deg, #283593 0%, #283593 50%, #A32020 50%, #A32020 100%); }
+        .btn-cea { background: repeating-linear-gradient(90deg, #1a1a1a 0px, #1a1a1a 11px, #e0e0e0 11px, #e0e0e0 22px); }
+        .btn-vit { background: repeating-linear-gradient(180deg, #A32020 0px, #A32020 11px, #1a1a1a 11px, #1a1a1a 22px); }
+        .btn-bah { background: linear-gradient(90deg, #A32020 0%, #A32020 33.3%, #e0e0e0 33.3%, #e0e0e0 66.6%, #283593 66.6%, #283593 100%); }
+        .btn-for { background: linear-gradient(105deg, #283593 0%, #283593 50%, #A32020 50%, #A32020 100%); }
         
-        #btn-pal { background: linear-gradient(90deg, #1B5E20 0%, #1B5E20 25%, #e0e0e0 25%, #e0e0e0 75%, #1B5E20 75%, #1B5E20 100%); }
-        #btn-spo { background: linear-gradient(180deg, #A32020 0%, #A32020 33.3%, #e0e0e0 33.3%, #e0e0e0 66.6%, #1a1a1a 66.6%, #1a1a1a 100%); }
-        #btn-san { background: #e0e0e0; border-color: #666; }
-        #btn-cor { background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 15%, #A32020 15%, #A32020 18%, #e0e0e0 18%, #e0e0e0 82%, #A32020 82%, #A32020 85%, #1a1a1a 85%, #1a1a1a 100%); }
+        .btn-pal { background: linear-gradient(90deg, #1B5E20 0%, #1B5E20 25%, #e0e0e0 25%, #e0e0e0 75%, #1B5E20 75%, #1B5E20 100%); }
+        .btn-spo { background: linear-gradient(180deg, #A32020 0%, #A32020 33.3%, #e0e0e0 33.3%, #e0e0e0 66.6%, #1a1a1a 66.6%, #1a1a1a 100%); }
+        .btn-san { background: #e0e0e0; border-color: #666; }
+        .btn-cor { background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 15%, #A32020 15%, #A32020 18%, #e0e0e0 18%, #e0e0e0 82%, #A32020 82%, #A32020 85%, #1a1a1a 85%, #1a1a1a 100%); }
 
-        table.standings { width: 90%; max-width: 500px; border-collapse: collapse; margin: 20px 0; background: rgba(0,0,0,0.85); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.8); text-align: center; }
-        .standings th { background: #111; color: #C0A020; padding: 10px; font-size: 8px; border-bottom: 2px solid #333;}
+        /* Componentes de Tela de Tabela e Customização */
+        .table-container { width: 90%; max-width: 500px; max-height: 50vh; overflow-y: auto; border-radius: 10px; margin: 20px 0; background: rgba(0,0,0,0.85); box-shadow: 0 8px 20px rgba(0,0,0,0.8); }
+        table.standings { width: 100%; border-collapse: collapse; text-align: center; }
+        .standings th { background: #111; color: #C0A020; padding: 10px; font-size: 8px; border-bottom: 2px solid #333; position: sticky; top: 0;}
         .standings td { padding: 10px; font-size: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd;}
         .standings tr:last-child td { border-bottom: none; }
         .pos-1 { background: rgba(192, 160, 32, 0.3); }
@@ -113,6 +118,16 @@
         #btn-confirm-formation { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 10; font-size: 12px;}
         
         .trophy { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 20px #C0A020); }
+
+        /* Custom Camp UI */
+        #custom-camp-input {
+            width: 80%; max-width: 300px; padding: 10px; background: rgba(0,0,0,0.5); border: 2px solid #4aa3df;
+            color: #fff; font-size: 10px; text-align: center; margin-bottom: 15px;
+        }
+        #custom-camp-input:focus { outline: none; border-color: #C0A020; }
+        .size-btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .size-btn { background: #111; color: #777; border: 2px solid #555; padding: 10px; font-size: 8px; cursor: pointer; }
+        .size-btn.active { border-color: #4aa3df; color: #fff; background: #1A237E; }
     </style>
 </head>
 <body>
@@ -134,43 +149,64 @@
                 <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_CAR')">CAMPEONATO CARIOCA</button>
                 <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_NOR')">COPA DO NORDESTE</button>
                 <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_PAU')">CAMPEONATO PAULISTA</button>
+                <button class="retro-menu-btn" style="color: #FFFF00;" onclick="openCustomCampMenu()">CAMPEONATO PERSONALIZADO</button>
             </div>
         </div>
     </div>
 
+    <div id="screen-custom-camp" class="screen hidden" style="justify-content: flex-start; padding-top: 5vh;">
+        <h2 class="retro-title">CRIAR CAMPEONATO</h2>
+        <input type="text" id="custom-camp-input" placeholder="NOME DO TORNEIO" maxlength="15">
+        
+        <div class="size-btn-group">
+            <button class="size-btn active" id="size-4" onclick="setCustomSize(4)">4 TIMES</button>
+            <button class="size-btn" id="size-6" onclick="setCustomSize(6)">6 TIMES</button>
+            <button class="size-btn" id="size-8" onclick="setCustomSize(8)">8 TIMES</button>
+        </div>
+        <p style="font-size: 8px; color: #ccc; margin-bottom: 15px;">O PRIMEIRO SERÁ O SEU TIME</p>
+        
+        <div id="custom-team-list" class="team-selection" style="max-height: 40vh; overflow-y: auto;"></div>
+
+        <button id="btn-start-custom" class="btn-game" style="opacity: 0.5; pointer-events: none; margin-top: 15px;" onclick="startCustomCamp()">COMEÇAR (0/4)</button>
+        <button class="btn-game" style="background: #333;" onclick="openModeMenu()">VOLTAR</button>
+    </div>
+
     <div id="screen-team" class="screen hidden">
         <h2 id="title-team-select" class="retro-title">ESCOLHA SEU TIME</h2>
-        
-        <h3 id="label-carioca" class="team-group-title">CARIOCA</h3>
-        <div id="group-carioca" class="team-selection">
-            <div class="team-wrapper" id="wrap-fla"><div id="btn-fla" class="team-btn" onclick="selectTeam('FLA')"></div><div class="team-label">FLA</div></div>
-            <div class="team-wrapper" id="wrap-vas"><div id="btn-vas" class="team-btn" onclick="selectTeam('VAS')"></div><div class="team-label">VAS</div></div>
-            <div class="team-wrapper" id="wrap-flu"><div id="btn-flu" class="team-btn" onclick="selectTeam('FLU')"></div><div class="team-label">FLU</div></div>
-            <div class="team-wrapper" id="wrap-bot"><div id="btn-bot" class="team-btn" onclick="selectTeam('BOT')"></div><div class="team-label">BOT</div></div>
-        </div>
+        <div id="team-list-container" style="width: 100%; max-height: 70vh; overflow-y: auto; display: flex; flex-direction: column; align-items: center;">
+            <h3 id="label-carioca" class="team-group-title">CARIOCA</h3>
+            <div id="group-carioca" class="team-selection">
+                <div class="team-wrapper" id="wrap-fla"><div id="btn-fla" class="team-btn btn-fla" onclick="selectTeam('FLA')"></div><div class="team-label">FLA</div></div>
+                <div class="team-wrapper" id="wrap-vas"><div id="btn-vas" class="team-btn btn-vas" onclick="selectTeam('VAS')"></div><div class="team-label">VAS</div></div>
+                <div class="team-wrapper" id="wrap-flu"><div id="btn-flu" class="team-btn btn-flu" onclick="selectTeam('FLU')"></div><div class="team-label">FLU</div></div>
+                <div class="team-wrapper" id="wrap-bot"><div id="btn-bot" class="team-btn btn-bot" onclick="selectTeam('BOT')"></div><div class="team-label">BOT</div></div>
+            </div>
 
-        <h3 id="label-nordeste" class="team-group-title">NORDESTE</h3>
-        <div id="group-nordeste" class="team-selection">
-            <div class="team-wrapper" id="wrap-cea"><div id="btn-cea" class="team-btn" onclick="selectTeam('CEA')"></div><div class="team-label">CEARÁ</div></div>
-            <div class="team-wrapper" id="wrap-vit"><div id="btn-vit" class="team-btn" onclick="selectTeam('VIT')"></div><div class="team-label">VITÓRIA</div></div>
-            <div class="team-wrapper" id="wrap-bah"><div id="btn-bah" class="team-btn" onclick="selectTeam('BAH')"></div><div class="team-label">BAHIA</div></div>
-            <div class="team-wrapper" id="wrap-for"><div id="btn-for" class="team-btn" onclick="selectTeam('FOR')"></div><div class="team-label">FORTALEZA</div></div>
-        </div>
+            <h3 id="label-nordeste" class="team-group-title">NORDESTE</h3>
+            <div id="group-nordeste" class="team-selection">
+                <div class="team-wrapper" id="wrap-cea"><div id="btn-cea" class="team-btn btn-cea" onclick="selectTeam('CEA')"></div><div class="team-label">CEARÁ</div></div>
+                <div class="team-wrapper" id="wrap-vit"><div id="btn-vit" class="team-btn btn-vit" onclick="selectTeam('VIT')"></div><div class="team-label">VITÓRIA</div></div>
+                <div class="team-wrapper" id="wrap-bah"><div id="btn-bah" class="team-btn btn-bah" onclick="selectTeam('BAH')"></div><div class="team-label">BAHIA</div></div>
+                <div class="team-wrapper" id="wrap-for"><div id="btn-for" class="team-btn btn-for" onclick="selectTeam('FOR')"></div><div class="team-label">FORTALEZA</div></div>
+            </div>
 
-        <h3 id="label-paulista" class="team-group-title">PAULISTA</h3>
-        <div id="group-paulista" class="team-selection">
-            <div class="team-wrapper" id="wrap-pal"><div id="btn-pal" class="team-btn" onclick="selectTeam('PAL')"></div><div class="team-label">PAL</div></div>
-            <div class="team-wrapper" id="wrap-spo"><div id="btn-spo" class="team-btn" onclick="selectTeam('SPO')"></div><div class="team-label">SPO</div></div>
-            <div class="team-wrapper" id="wrap-san"><div id="btn-san" class="team-btn" onclick="selectTeam('SAN')"></div><div class="team-label">SAN</div></div>
-            <div class="team-wrapper" id="wrap-cor"><div id="btn-cor" class="team-btn" onclick="selectTeam('COR')"></div><div class="team-label">COR</div></div>
+            <h3 id="label-paulista" class="team-group-title">PAULISTA</h3>
+            <div id="group-paulista" class="team-selection">
+                <div class="team-wrapper" id="wrap-pal"><div id="btn-pal" class="team-btn btn-pal" onclick="selectTeam('PAL')"></div><div class="team-label">PAL</div></div>
+                <div class="team-wrapper" id="wrap-spo"><div id="btn-spo" class="team-btn btn-spo" onclick="selectTeam('SPO')"></div><div class="team-label">SPO</div></div>
+                <div class="team-wrapper" id="wrap-san"><div id="btn-san" class="team-btn btn-san" onclick="selectTeam('SAN')"></div><div class="team-label">SAN</div></div>
+                <div class="team-wrapper" id="wrap-cor"><div id="btn-cor" class="team-btn btn-cor" onclick="selectTeam('COR')"></div><div class="team-label">COR</div></div>
+            </div>
         </div>
     </div>
 
     <div id="screen-table" class="screen hidden">
         <h2 id="table-title" class="retro-title" style="color: #fff; text-shadow: 2px 2px #000;">CLASSIFICAÇÃO</h2>
-        <table class="standings" id="standings-table">
-            <tr><th>POS</th><th>TIME</th><th>P</th><th>J</th><th>V</th><th>D</th><th>SG</th></tr>
-        </table>
+        <div class="table-container">
+            <table class="standings" id="standings-table">
+                <tr><th>POS</th><th>TIME</th><th>P</th><th>J</th><th>V</th><th>D</th><th>SG</th></tr>
+            </table>
+        </div>
         <button id="btn-next-match" class="btn-game" onclick="startNextMatch()">PRÓXIMA PARTIDA</button>
     </div>
 
@@ -200,6 +236,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 let audioCtx;
 
+// Áudios Externos
 const audioMenu = new Audio('assets/music/telas.mp3'); audioMenu.loop = true;
 const audioGame = new Audio('assets/music/jogotodo.mp3'); audioGame.loop = true;
 const audioDefesa = new Audio('assets/music/defesa.mp3');
@@ -232,6 +269,12 @@ let popup = { text: "", timer: 0, maxTimer: 0, isRetro: false };
 let ballTouched = false; let lastShotY = 0; let lastTouchTeam = 0; 
 let lastPlayerToTouchBall = null; let celebrationTarget = null; let isOwnGoalCelebration = false;
 let isKickoff = true;
+
+// Custom Camp Variables
+let customCampName = "";
+let customCampSize = 4;
+let customCampTeams = [];
+const ALL_TEAMS_LIST = ['FLA', 'VAS', 'FLU', 'BOT', 'CEA', 'VIT', 'BAH', 'FOR', 'PAL', 'SPO', 'SAN', 'COR'];
 
 let currentRound = 0; let schedule = []; let standings = [];
 let startClicks = 0;
@@ -321,6 +364,7 @@ function openModeMenu() {
     playClickSound(); requestFullScreen(); 
     document.getElementById('screen-start').classList.add('hidden');
     document.getElementById('screen-mode').classList.remove('hidden');
+    document.getElementById('screen-custom-camp').classList.add('hidden');
     friendlySelectionStep = 0; 
 }
 
@@ -330,6 +374,7 @@ function loadGame() {
         gameMode = data.gameMode;
         playerTeamType = data.playerTeamType;
         aiTeamType = data.aiTeamType;
+        customCampName = data.customCampName || "";
         currentRound = data.currentRound;
         schedule = data.schedule;
         standings = data.standings;
@@ -345,7 +390,7 @@ function loadGame() {
 
 function saveGame() {
     if (gameMode === 'QUICK') return;
-    const data = { gameMode, playerTeamType, aiTeamType, currentRound, schedule, standings };
+    const data = { gameMode, playerTeamType, aiTeamType, customCampName, currentRound, schedule, standings };
     localStorage.setItem('pelada2026_save', JSON.stringify(data));
 }
 
@@ -362,7 +407,7 @@ function goToTeamSelect(mode) {
     const lNor = document.getElementById('label-nordeste');
     const lPau = document.getElementById('label-paulista');
     
-    let allBtns = document.querySelectorAll('.team-wrapper');
+    let allBtns = document.querySelectorAll('#team-list-container .team-wrapper');
     allBtns.forEach(b => b.style.display = 'flex');
 
     if (mode === 'QUICK') {
@@ -414,6 +459,87 @@ function reloadGame() {
     audioGame.pause(); audioMenu.play().catch(e=>{});
     setTimeout(() => { location.reload(); }, 200);
 }
+
+// ================= CUSTOM CAMP MENU =================
+function openCustomCampMenu() {
+    playClickSound();
+    document.getElementById('screen-mode').classList.add('hidden');
+    document.getElementById('screen-custom-camp').classList.remove('hidden');
+    customCampTeams = []; setCustomSize(4); renderCustomTeamList();
+}
+
+function setCustomSize(size) {
+    playClickSound();
+    customCampSize = size;
+    document.getElementById('size-4').classList.remove('active');
+    document.getElementById('size-6').classList.remove('active');
+    document.getElementById('size-8').classList.remove('active');
+    document.getElementById('size-' + size).classList.add('active');
+    
+    if (customCampTeams.length > size) customCampTeams = customCampTeams.slice(0, size);
+    updateCustomCampUI();
+}
+
+function renderCustomTeamList() {
+    const container = document.getElementById('custom-team-list');
+    container.innerHTML = '';
+    ALL_TEAMS_LIST.forEach(t => {
+        const wrap = document.createElement('div'); wrap.className = 'team-wrapper';
+        const clone = document.getElementById('btn-' + t.toLowerCase()).cloneNode(true);
+        clone.id = 'btn-cust-' + t.toLowerCase(); 
+        clone.onclick = () => toggleCustomTeam(t, clone);
+        
+        const label = document.createElement('div'); label.className = 'team-label'; label.innerText = t;
+        wrap.appendChild(clone); wrap.appendChild(label);
+        container.appendChild(wrap);
+    });
+    updateCustomCampUI();
+}
+
+function toggleCustomTeam(team, btnElem) {
+    playClickSound();
+    const idx = customCampTeams.indexOf(team);
+    if (idx > -1) { customCampTeams.splice(idx, 1); } 
+    else { if (customCampTeams.length < customCampSize) customCampTeams.push(team); }
+    updateCustomCampUI();
+}
+
+function updateCustomCampUI() {
+    const list = document.getElementById('custom-team-list').children;
+    for(let i=0; i<list.length; i++) {
+        let wrap = list[i]; let btn = wrap.children[0]; let label = wrap.children[1];
+        let teamId = ALL_TEAMS_LIST[i];
+        btn.classList.remove('selected-p1', 'selected-ai', 'disabled');
+        
+        let idx = customCampTeams.indexOf(teamId);
+        if (idx === 0) { btn.classList.add('selected-p1'); label.innerText = "1P " + teamId; }
+        else if (idx > 0) { btn.classList.add('selected-ai'); label.innerText = "CPU " + teamId; }
+        else { 
+            label.innerText = teamId; 
+            if (customCampTeams.length >= customCampSize) btn.classList.add('disabled');
+        }
+    }
+    const btnStart = document.getElementById('btn-start-custom');
+    btnStart.innerText = `COMEÇAR (${customCampTeams.length}/${customCampSize})`;
+    if (customCampTeams.length === customCampSize) {
+        btnStart.style.opacity = '1'; btnStart.style.pointerEvents = 'auto';
+    } else {
+        btnStart.style.opacity = '0.5'; btnStart.style.pointerEvents = 'none';
+    }
+}
+
+function startCustomCamp() {
+    playClickSound();
+    gameMode = 'CAMP_CUS';
+    customCampName = document.getElementById('custom-camp-input').value.trim().toUpperCase() || "CAMP. PERSONALIZADO";
+    playerTeamType = customCampTeams[0];
+    
+    document.getElementById('screen-custom-camp').classList.add('hidden');
+    audioMenu.pause(); audioMenu.currentTime = 0; 
+    audioGame.play().catch(e=>{}); 
+    initTournament(customCampTeams);
+}
+
 
 // ================= BALÃO TEXTO =================
 function showPopup(text, duration = 120, isRetro = false) {
@@ -484,32 +610,56 @@ function endOfMatch() {
     setTimeout(() => { processMatchResult(); }, 3000);
 }
 
-// ================= CAMPEONATO =================
-function initTournament() {
+// ================= CAMPEONATO (ROUND ROBIN GERADOR) =================
+function generateSchedule(teamsArr) {
+    let n = teamsArr.length; let rs = []; let t = [...teamsArr];
+    for (let round = 0; round < n - 1; round++) {
+        let matches = [];
+        for (let i = 0; i < n / 2; i++) {
+            let home = t[i]; let away = t[n - 1 - i];
+            if (i === 0 && round % 2 === 1) matches.push({h: away, a: home});
+            else matches.push({h: home, a: away});
+        }
+        rs.push(matches);
+        t.splice(1, 0, t.pop());
+    }
+    let secondHalf = rs.map(r => r.map(m => ({h: m.a, a: m.h})));
+    return rs.concat(secondHalf);
+}
+
+function initTournament(customTeams = null) {
     let teams = [];
     if (gameMode === 'CAMP_CAR') teams = ['FLA', 'VAS', 'FLU', 'BOT'];
     else if (gameMode === 'CAMP_NOR') teams = ['CEA', 'VIT', 'BAH', 'FOR'];
     else if (gameMode === 'CAMP_PAU') teams = ['PAL', 'SPO', 'SAN', 'COR'];
+    else if (gameMode === 'CAMP_CUS') teams = customTeams;
 
     standings = teams.map(t => ({ id: t, p: 0, j: 0, v: 0, d: 0, gp: 0, gc: 0, sg: 0 }));
-    let outros = teams.filter(t => t !== playerTeamType);
-    let t0 = playerTeamType, t1 = outros[0], t2 = outros[1], t3 = outros[2];
-    schedule = [[{h:t0, a:t1}, {h:t2, a:t3}], [{h:t0, a:t2}, {h:t3, a:t1}], [{h:t0, a:t3}, {h:t1, a:t2}], [{h:t1, a:t0}, {h:t3, a:t2}], [{h:t2, a:t0}, {h:t1, a:t3}], [{h:t3, a:t0}, {h:t2, a:t1}]];
+    schedule = generateSchedule(teams);
     currentRound = 0; updateTableScreen();
 }
 
 function updateTableScreen() {
     document.getElementById('ui-game').classList.add('hidden');
     document.getElementById('screen-table').classList.remove('hidden');
-    document.getElementById('table-title').innerText = currentRound === 0 ? "INÍCIO DA TEMPORADA" : `FIM DA RODADA ${currentRound}`;
+    
+    let tTitle = "CLASSIFICAÇÃO";
+    if (gameMode === 'CAMP_CUS') tTitle = customCampName;
+    else if (gameMode === 'CAMP_CAR') tTitle = "CARIOCA";
+    else if (gameMode === 'CAMP_NOR') tTitle = "COPA DO NORDESTE";
+    else if (gameMode === 'CAMP_PAU') tTitle = "PAULISTÃO";
+
+    document.getElementById('table-title').innerText = currentRound === 0 ? tTitle : `RODADA ${currentRound}`;
+    
     standings.sort((a,b) => b.p !== a.p ? b.p - a.p : b.sg !== a.sg ? b.sg - a.sg : b.gp - a.gp);
     let tb = document.getElementById('standings-table');
     tb.innerHTML = "<tr><th>POS</th><th>TIME</th><th>P</th><th>J</th><th>V</th><th>D</th><th>SG</th></tr>";
     standings.forEach((t, idx) => {
         tb.innerHTML += `<tr class="${idx === 0 ? 'pos-1' : ''}"><td>${idx+1}º</td><td>${t.id}</td><td>${t.p}</td><td>${t.j}</td><td>${t.v}</td><td>${t.d}</td><td>${t.sg}</td></tr>`;
     });
+    
     let btn = document.getElementById('btn-next-match');
-    if (currentRound >= 6) { btn.innerText = "FINALIZAR TEMPORADA"; btn.onclick = finishTournament; } 
+    if (currentRound >= schedule.length) { btn.innerText = "FINALIZAR TEMPORADA"; btn.onclick = finishTournament; } 
     else { btn.innerText = "PRÓXIMA PARTIDA"; btn.onclick = startNextMatch; }
     saveGame();
 }
@@ -518,7 +668,11 @@ function startNextMatch() {
     playClickSound();
     document.getElementById('screen-table').classList.add('hidden');
     document.getElementById('ui-game').classList.remove('hidden');
-    let playerMatch = schedule[currentRound][0]; aiTeamType = playerMatch.h === playerTeamType ? playerMatch.a : playerMatch.h;
+    
+    let roundMatches = schedule[currentRound];
+    let playerMatch = roundMatches.find(m => m.h === playerTeamType || m.a === playerTeamType);
+    aiTeamType = playerMatch.h === playerTeamType ? playerMatch.a : playerMatch.h;
+    
     setupInitialMatch();
 }
 
@@ -539,10 +693,14 @@ function processMatchResult() {
         p1Stats.sg = p1Stats.gp - p1Stats.gc; aiStats.sg = aiStats.gp - aiStats.gc;
         if (scoreP1 > scoreAI) { p1Stats.p += 3; p1Stats.v++; aiStats.d++; } else if (scoreAI > scoreP1) { aiStats.p += 3; aiStats.v++; p1Stats.d++; } else { p1Stats.p += 1; aiStats.p += 1; }
         
-        let simMatch = schedule[currentRound][1]; let tH = standings.find(t => t.id === simMatch.h); let tA = standings.find(t => t.id === simMatch.a);
-        let gH = Math.random() > 0.5 ? 3 : Math.floor(Math.random() * 3); let gA = gH === 3 ? Math.floor(Math.random() * 3) : 3;
-        tH.j++; tA.j++; tH.gp += gH; tH.gc += gA; tA.gp += gA; tA.gc += gH; tH.sg = tH.gp - tH.gc; tA.sg = tA.gp - tA.gc;
-        if (gH > gA) { tH.p += 3; tH.v++; tA.d++; } else if (gA > gH) { tA.p += 3; tA.v++; tH.d++; } else { tH.p += 1; tA.p += 1; }
+        let roundMatches = schedule[currentRound];
+        for (let match of roundMatches) {
+            if (match.h === playerTeamType || match.a === playerTeamType) continue; 
+            let tH = standings.find(t => t.id === match.h); let tA = standings.find(t => t.id === match.a);
+            let gH = Math.random() > 0.5 ? 3 : Math.floor(Math.random() * 3); let gA = gH === 3 ? Math.floor(Math.random() * 3) : 3;
+            tH.j++; tA.j++; tH.gp += gH; tH.gc += gA; tA.gp += gA; tA.gc += gH; tH.sg = tH.gp - tH.gc; tA.sg = tA.gp - tA.gc;
+            if (gH > gA) { tH.p += 3; tH.v++; tA.d++; } else if (gA > gH) { tA.p += 3; tA.v++; tH.d++; } else { tH.p += 1; tA.p += 1; }
+        }
         
         currentRound++; setTimeout(updateTableScreen, 1000);
     }
@@ -591,8 +749,14 @@ function setupInitialMatch() {
     scoreP1 = 0; scoreAI = 0; nextTurn = 1; 
     currentHalf = 1; currentTime = 0; extraTime = Math.floor(Math.random() * 5) + 1; p1Side = 'BOTTOM';
     
-    if (gameMode.startsWith('CAMP')) playerIsHome = (schedule[currentRound][0].h === playerTeamType);
-    else playerIsHome = Math.random() > 0.5;
+    if (gameMode.startsWith('CAMP')) {
+        let roundMatches = schedule[currentRound];
+        let playerMatch = roundMatches.find(m => m.h === playerTeamType || m.a === playerTeamType);
+        playerIsHome = (playerMatch.h === playerTeamType);
+    } else {
+        playerIsHome = Math.random() > 0.5;
+    }
+    
     updateHUD();
     
     fieldType = Math.floor(Math.random() * 4); 
@@ -606,8 +770,8 @@ function setupInitialMatch() {
     const pr = Math.min(cw, ch) * 0.047; ball = { x: 0, y: 0, z: 0, vx: 0, vy: 0, vz: 0, r: pr * 0.45, mass: 0.5, rotation: 0, visible: true };
     players = []; goalkeepers = [];
     
-    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 2, isGK: true, num: 1, gkColor: getGKColor(aiTeamType), tx: 0, ty: 0, bounds: null });
-    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 1, isGK: true, num: 1, gkColor: getGKColor(playerTeamType), tx: 0, ty: 0, bounds: null });
+    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 2, isGK: true, num: 1, gkColor: getGKColor(aiTeamType), tx: 0, ty: 0, patrolDir: 1, bounds: null });
+    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 1, isGK: true, num: 1, gkColor: getGKColor(playerTeamType), tx: 0, ty: 0, patrolDir: 1, bounds: null });
 
     let numsP1 = getUniqueNumbers(4); let numsAI = getUniqueNumbers(4);
     for(let i=0; i<4; i++) players.push({ x: 0, y: 0, vx: 0, vy: 0, r: pr, mass: 1, team: 1, num: numsP1[i] });
@@ -666,7 +830,7 @@ function startFormationPhase() {
             aiIdx++;
         }
     }
-    for(let gk of goalkeepers) { gk.vx = 0; gk.vy = 0; gk.tx = canvas.width / 2; gk.x = canvas.width / 2; gk.y = gk.team === 1 ? (p1Side === 'BOTTOM' ? boundBottom - fieldH*0.05 : boundTop + fieldH*0.05) : (p1Side === 'BOTTOM' ? boundTop + fieldH*0.05 : boundBottom - fieldH*0.05); gk.ty = gk.y; }
+    for(let gk of goalkeepers) { gk.vx = 0; gk.vy = 0; gk.x = canvas.width / 2; gk.y = gk.team === 1 ? (p1Side === 'BOTTOM' ? boundBottom - fieldH*0.05 : boundTop + fieldH*0.05) : (p1Side === 'BOTTOM' ? boundTop + fieldH*0.05 : boundBottom - fieldH*0.05); gk.ty = gk.y; }
     document.getElementById('btn-confirm-formation').classList.remove('hidden');
 }
 
@@ -739,17 +903,12 @@ function resolveCollision(c1, c2) {
             let gk = c1.isGK ? c1 : c2; 
             if (Math.hypot(ball.vx, ball.vy) > 5 && STATE !== 'SCORED') showPopup("QUE DEFESA!", 120, false);
             audioDefesa.currentTime = 0; audioDefesa.play().catch(e=>{});
-            
             let overlap = (ball.r + gk.r) - dist + 1; let nx = dx / dist; let ny = dy / dist;
             if (c1 === ball) { ball.x -= nx*overlap; ball.y -= ny*overlap; } else { ball.x += nx*overlap; ball.y += ny*overlap; }
-            
             let isGkTop = gk.y < canvas.height/2;
             let forceY = isGkTop ? 10 : -10; 
             let forceX = (ball.x - gk.x) * 0.2; forceX = Math.max(-8, Math.min(8, forceX));
-            
-            ball.vx = forceX; ball.vy = forceY; 
-            ball.vz = 0; ball.z = 0; 
-            return;
+            ball.vx = forceX; ball.vy = forceY; ball.vz = 0; ball.z = 0; return;
         }
 
         let overlap = (c1.r + c2.r) - dist; let nx = dx / dist; let ny = dy / dist;
@@ -778,16 +937,21 @@ function updatePhysics() {
     let ballInBotArea = ball.x > canvas.width/2 - areaW/2 && ball.x < canvas.width/2 + areaW/2 && ball.y > boundBottom - areaH;
 
     for (let gk of goalkeepers) {
-        let speed = 1.05; 
         let isGkTop = gk.y < canvas.height/2;
-        if (isGkTop && ballInTopArea && ball.visible) { gk.tx = ball.x; gk.ty = ball.y; speed = 2.1; }
-        else if (!isGkTop && ballInBotArea && ball.visible) { gk.tx = ball.x; gk.ty = ball.y; speed = 2.1; }
-        else {
+        if (isGkTop && ballInTopArea && ball.visible) { 
+            gk.tx = ball.x; gk.ty = ball.y; 
             let dx = gk.tx - gk.x; let dy = gk.ty - gk.y; let dist = Math.hypot(dx, dy);
-            if (dist < 5) { gk.tx = gk.bounds.minX + Math.random() * (gk.bounds.maxX - gk.bounds.minX); gk.ty = gk.bounds.minY + Math.random() * (gk.bounds.maxY - gk.bounds.minY); }
+            if(dist > 0) { gk.x += (dx / dist) * 2.1; gk.y += (dy / dist) * 2.1; }
+        } else if (!isGkTop && ballInBotArea && ball.visible) { 
+            gk.tx = ball.x; gk.ty = ball.y; 
+            let dx = gk.tx - gk.x; let dy = gk.ty - gk.y; let dist = Math.hypot(dx, dy);
+            if(dist > 0) { gk.x += (dx / dist) * 2.1; gk.y += (dy / dist) * 2.1; }
+        } else {
+            gk.x += gk.patrolDir * 1.05;
+            gk.y = gk.ty; 
+            if (gk.x < gk.bounds.minX) { gk.x = gk.bounds.minX; gk.patrolDir = 1; }
+            if (gk.x > gk.bounds.maxX) { gk.x = gk.bounds.maxX; gk.patrolDir = -1; }
         }
-        let dx = gk.tx - gk.x; let dy = gk.ty - gk.y; let dist = Math.hypot(dx, dy);
-        if(dist > 0) { gk.x += (dx / dist) * speed; gk.y += (dy / dist) * speed; }
     }
 
     for (let e of allEntities) {
@@ -888,7 +1052,6 @@ function processGoal(isOwnGoal) {
     }
 
     fireworksTimer = 300; nextTurn = scoringTeam === 1 ? 2 : 1; 
-    
     celebrationTarget = lastPlayerToTouchBall;
     isOwnGoalCelebration = isOwnGoal;
 
@@ -1052,9 +1215,7 @@ function drawButton(p) {
             if (isClash && (clashType === 'FLA_VIT' || clashType === 'BAH_FOR')) needDarkText = true;
         }
 
-        if (needDarkText) {
-            ctx.fillStyle = '#1a1a1a'; ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 2;
-        }
+        if (needDarkText) { ctx.fillStyle = '#1a1a1a'; ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 2; }
 
         ctx.font = `bold ${p.r * 1.1}px Arial, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         let numY = (tName === 'BOT' && !p.isGK && !isClash) ? p.r * 0.2 : 0;
@@ -1064,8 +1225,8 @@ function drawButton(p) {
 
 function drawSoccerBall(b) {
     ctx.save(); 
-    let visualScale = Math.min(1.4, 1 + (b.z * 0.02)); 
-    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8 + b.z; ctx.shadowOffsetX = 4 + b.z*0.8; ctx.shadowOffsetY = 4 + b.z*0.8;
+    let visualScale = Math.min(1.5, 1 + (b.z * 0.02)); 
+    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8 + b.z*0.8; ctx.shadowOffsetX = 4 + b.z*0.6; ctx.shadowOffsetY = 4 + b.z*0.6;
     
     ctx.translate(b.x, b.y); ctx.scale(visualScale, visualScale); b.rotation += (Math.abs(b.vx) + Math.abs(b.vy)) * 0.05; ctx.rotate(b.rotation);
     
