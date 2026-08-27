@@ -65,8 +65,8 @@
         }
         .retro-menu-body { background: #1A237E; border: 3px solid #2E7D32; display: flex; flex-direction: column; }
         .retro-menu-btn {
-            background: transparent; color: #eee; font-size: 12px; border: none; border-bottom: 2px solid #3949AB; 
-            padding: 15px; cursor: pointer; transition: 0.1s; text-shadow: 2px 2px 0px #000;
+            background: transparent; color: #eee; font-size: 10px; border: none; border-bottom: 2px solid #3949AB; 
+            padding: 14px; cursor: pointer; transition: 0.1s; text-shadow: 2px 2px 0px #000;
         }
         .retro-menu-btn:hover, .retro-menu-btn:active { color: #C0A020; background: rgba(255,255,255,0.1); }
         .retro-menu-btn:last-child { border-bottom: none; }
@@ -86,7 +86,7 @@
         .team-btn.selected-ai { border-color: #ff3333; transform: scale(1.05); }
         .team-btn.disabled { opacity: 0.3; pointer-events: none; }
         
-        /* Cores dos Botões HTML */
+        /* Cores dos Botões via Classes */
         .btn-fla { background: repeating-linear-gradient(180deg, #A32020 0px, #A32020 11px, #1a1a1a 11px, #1a1a1a 22px); }
         .btn-vas { background: linear-gradient(135deg, #e0e0e0 0%, #e0e0e0 40%, #1a1a1a 40%, #1a1a1a 60%, #e0e0e0 60%, #e0e0e0 100%); border-color: #666; }
         .btn-flu { background: repeating-linear-gradient(90deg, #1B5E20 0px, #1B5E20 9px, #fff 9px, #fff 11px, #7F0000 11px, #7F0000 20px, #fff 20px, #fff 22px); }
@@ -103,7 +103,14 @@
         .btn-san { background: #e0e0e0; border-color: #666; }
         .btn-cor { background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 15%, #A32020 15%, #A32020 18%, #e0e0e0 18%, #e0e0e0 82%, #A32020 82%, #A32020 85%, #1a1a1a 85%, #1a1a1a 100%); }
 
-        table.standings { width: 90%; max-width: 500px; border-collapse: collapse; margin: 20px 0; background: rgba(0,0,0,0.85); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.8); text-align: center; }
+        .btn-cfc { background: linear-gradient(90deg, #e0e0e0 0%, #e0e0e0 25%, #1B5E20 25%, #1B5E20 38%, #e0e0e0 38%, #e0e0e0 62%, #1B5E20 62%, #1B5E20 75%, #e0e0e0 75%, #e0e0e0 100%); }
+        .btn-cap { background: linear-gradient(135deg, #A32020 0%, #A32020 50%, #1a1a1a 50%, #1a1a1a 100%); }
+        .btn-int { background: #A32020; border-color: #e0e0e0; }
+        .btn-gre { background: repeating-linear-gradient(90deg, #1a1a1a 0px, #1a1a1a 10px, #e0e0e0 10px, #e0e0e0 12px, #283593 12px, #283593 22px, #e0e0e0 22px, #e0e0e0 24px); }
+
+        /* Componentes de Tela de Tabela e Customização */
+        .table-container { width: 90%; max-width: 500px; max-height: 50vh; overflow-y: auto; border-radius: 10px; margin: 20px 0; background: rgba(0,0,0,0.85); box-shadow: 0 8px 20px rgba(0,0,0,0.8); }
+        table.standings { width: 100%; border-collapse: collapse; text-align: center; }
         .standings th { background: #111; color: #C0A020; padding: 10px; font-size: 8px; border-bottom: 2px solid #333; position: sticky; top: 0;}
         .standings td { padding: 10px; font-size: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd;}
         .standings tr:last-child td { border-bottom: none; }
@@ -143,6 +150,7 @@
                 <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_CAR')">CAMPEONATO CARIOCA</button>
                 <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_NOR')">COPA DO NORDESTE</button>
                 <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_PAU')">CAMPEONATO PAULISTA</button>
+                <button class="retro-menu-btn" onclick="goToTeamSelect('CAMP_SUL')">COPA DO SUL</button>
                 <button class="retro-menu-btn" style="color: #FFFF00;" onclick="openCustomCampMenu()">CAMPEONATO PERSONALIZADO</button>
             </div>
         </div>
@@ -191,6 +199,14 @@
                 <div class="team-wrapper" id="wrap-san"><div id="btn-san" class="team-btn btn-san" onclick="selectTeam('SAN')"></div><div class="team-label">SAN</div></div>
                 <div class="team-wrapper" id="wrap-cor"><div id="btn-cor" class="team-btn btn-cor" onclick="selectTeam('COR')"></div><div class="team-label">COR</div></div>
             </div>
+
+            <h3 id="label-sul" class="team-group-title">COPA DO SUL</h3>
+            <div id="group-sul" class="team-selection">
+                <div class="team-wrapper" id="wrap-cfc"><div id="btn-cfc" class="team-btn btn-cfc" onclick="selectTeam('CFC')"></div><div class="team-label">CORITIBA</div></div>
+                <div class="team-wrapper" id="wrap-cap"><div id="btn-cap" class="team-btn btn-cap" onclick="selectTeam('CAP')"></div><div class="team-label">ATHLETICO</div></div>
+                <div class="team-wrapper" id="wrap-int"><div id="btn-int" class="team-btn btn-int" onclick="selectTeam('INT')"></div><div class="team-label">INTER</div></div>
+                <div class="team-wrapper" id="wrap-gre"><div id="btn-gre" class="team-btn btn-gre" onclick="selectTeam('GRE')"></div><div class="team-label">GRÊMIO</div></div>
+            </div>
         </div>
     </div>
 
@@ -238,13 +254,17 @@ const audioDefesa = new Audio('assets/music/defesa.mp3');
 const TEAM_NAMES = { 
     'FLA': 'FLAMENGO', 'VAS': 'VASCO', 'FLU': 'FLUMINENSE', 'BOT': 'BOTAFOGO', 
     'CEA': 'CEARÁ', 'VIT': 'VITÓRIA', 'BAH': 'BAHIA', 'FOR': 'FORTALEZA',
-    'PAL': 'PALMEIRAS', 'SPO': 'SÃO PAULO', 'SAN': 'SANTOS', 'COR': 'CORINTHIANS' 
+    'PAL': 'PALMEIRAS', 'SPO': 'SÃO PAULO', 'SAN': 'SANTOS', 'COR': 'CORINTHIANS',
+    'CFC': 'CORITIBA', 'CAP': 'ATHLETICO', 'INT': 'INTERNACIONAL', 'GRE': 'GRÊMIO'
 };
 
 let STATE = 'MENU'; 
 let gameMode = 'QUICK';
 let friendlySelectionStep = 0;
 let TURN = 1; let nextTurn = 1;
+let touchesInTurn = 0; // Controle de 2 toques
+let touchedOpponentInTurn = false;
+
 let scoreP1 = 0; let scoreAI = 0;
 let playerTeamType = 'FLA'; let aiTeamType = 'VAS';
 let playerIsHome = true;
@@ -268,7 +288,7 @@ let isKickoff = true;
 let customCampName = "";
 let customCampSize = 4;
 let customCampTeams = [];
-const ALL_TEAMS_LIST = ['FLA', 'VAS', 'FLU', 'BOT', 'CEA', 'VIT', 'BAH', 'FOR', 'PAL', 'SPO', 'SAN', 'COR'];
+const ALL_TEAMS_LIST = ['FLA', 'VAS', 'FLU', 'BOT', 'CEA', 'VIT', 'BAH', 'FOR', 'PAL', 'SPO', 'SAN', 'COR', 'CFC', 'CAP', 'INT', 'GRE'];
 
 let currentRound = 0; let schedule = []; let standings = [];
 let startClicks = 0;
@@ -397,26 +417,31 @@ function goToTeamSelect(mode) {
     const gCar = document.getElementById('group-carioca');
     const gNor = document.getElementById('group-nordeste');
     const gPau = document.getElementById('group-paulista');
+    const gSul = document.getElementById('group-sul');
     const lCar = document.getElementById('label-carioca');
     const lNor = document.getElementById('label-nordeste');
     const lPau = document.getElementById('label-paulista');
+    const lSul = document.getElementById('label-sul');
     
     let allBtns = document.querySelectorAll('#team-list-container .team-wrapper');
     allBtns.forEach(b => b.style.display = 'flex');
 
     if (mode === 'QUICK') {
         friendlySelectionStep = 1;
-        gCar.style.display = 'flex'; gNor.style.display = 'flex'; gPau.style.display = 'flex';
-        lCar.style.display = 'block'; lNor.style.display = 'block'; lPau.style.display = 'block';
+        gCar.style.display = 'flex'; gNor.style.display = 'flex'; gPau.style.display = 'flex'; gSul.style.display = 'flex';
+        lCar.style.display = 'block'; lNor.style.display = 'block'; lPau.style.display = 'block'; lSul.style.display = 'block';
     } else if (mode === 'CAMP_CAR') {
-        gCar.style.display = 'flex'; gNor.style.display = 'none'; gPau.style.display = 'none';
-        lCar.style.display = 'none'; lNor.style.display = 'none'; lPau.style.display = 'none';
+        gCar.style.display = 'flex'; gNor.style.display = 'none'; gPau.style.display = 'none'; gSul.style.display = 'none';
+        lCar.style.display = 'none'; lNor.style.display = 'none'; lPau.style.display = 'none'; lSul.style.display = 'none';
     } else if (mode === 'CAMP_NOR') {
-        gCar.style.display = 'none'; gNor.style.display = 'flex'; gPau.style.display = 'none';
-        lCar.style.display = 'none'; lNor.style.display = 'none'; lPau.style.display = 'none';
+        gCar.style.display = 'none'; gNor.style.display = 'flex'; gPau.style.display = 'none'; gSul.style.display = 'none';
+        lCar.style.display = 'none'; lNor.style.display = 'none'; lPau.style.display = 'none'; lSul.style.display = 'none';
     } else if (mode === 'CAMP_PAU') {
-        gCar.style.display = 'none'; gNor.style.display = 'none'; gPau.style.display = 'flex';
-        lCar.style.display = 'none'; lNor.style.display = 'none'; lPau.style.display = 'none';
+        gCar.style.display = 'none'; gNor.style.display = 'none'; gPau.style.display = 'flex'; gSul.style.display = 'none';
+        lCar.style.display = 'none'; lNor.style.display = 'none'; lPau.style.display = 'none'; lSul.style.display = 'none';
+    } else if (mode === 'CAMP_SUL') {
+        gCar.style.display = 'none'; gNor.style.display = 'none'; gPau.style.display = 'none'; gSul.style.display = 'flex';
+        lCar.style.display = 'none'; lNor.style.display = 'none'; lPau.style.display = 'none'; lSul.style.display = 'none';
     }
 }
 
@@ -534,7 +559,6 @@ function startCustomCamp() {
     initTournament(customCampTeams);
 }
 
-
 // ================= BALÃO TEXTO =================
 function showPopup(text, duration = 120, isRetro = false) {
     popup.text = text; popup.timer = duration; popup.maxTimer = duration; popup.isRetro = isRetro;
@@ -604,7 +628,7 @@ function endOfMatch() {
     setTimeout(() => { processMatchResult(); }, 3000);
 }
 
-// ================= CAMPEONATO =================
+// ================= CAMPEONATO (ROUND ROBIN) =================
 function generateSchedule(teamsArr) {
     let n = teamsArr.length; let rs = []; let t = [...teamsArr];
     for (let round = 0; round < n - 1; round++) {
@@ -626,6 +650,7 @@ function initTournament(customTeams = null) {
     if (gameMode === 'CAMP_CAR') teams = ['FLA', 'VAS', 'FLU', 'BOT'];
     else if (gameMode === 'CAMP_NOR') teams = ['CEA', 'VIT', 'BAH', 'FOR'];
     else if (gameMode === 'CAMP_PAU') teams = ['PAL', 'SPO', 'SAN', 'COR'];
+    else if (gameMode === 'CAMP_SUL') teams = ['CFC', 'CAP', 'INT', 'GRE'];
     else if (gameMode === 'CAMP_CUS') teams = customTeams;
 
     standings = teams.map(t => ({ id: t, p: 0, j: 0, v: 0, d: 0, gp: 0, gc: 0, sg: 0 }));
@@ -642,6 +667,7 @@ function updateTableScreen() {
     else if (gameMode === 'CAMP_CAR') tTitle = "CARIOCA";
     else if (gameMode === 'CAMP_NOR') tTitle = "COPA DO NORDESTE";
     else if (gameMode === 'CAMP_PAU') tTitle = "PAULISTÃO";
+    else if (gameMode === 'CAMP_SUL') tTitle = "COPA DO SUL";
 
     document.getElementById('table-title').innerText = currentRound === 0 ? tTitle : `RODADA ${currentRound}`;
     
@@ -714,7 +740,7 @@ function finishTournament() {
     }
 }
 
-// ================= CORES DESATURADAS E GOLEIRO =================
+// ================= CORES E UNIFORMES =================
 function getGKColor(tName) { 
     if(tName === 'FLA') return '#B89922'; if(tName === 'VAS') return '#666666'; 
     if(tName === 'FLU') return '#1E3A8A'; if(tName === 'BOT') return '#D0D0D0'; 
@@ -722,6 +748,8 @@ function getGKColor(tName) {
     if(tName === 'BAH') return '#4C7C4C'; if(tName === 'FOR') return '#9E1B1B';
     if(tName === 'PAL') return '#388E3C'; if(tName === 'SPO') return '#1A1A1A';
     if(tName === 'SAN') return '#1A1A1A'; if(tName === 'COR') return '#1A1A1A';
+    if(tName === 'CFC') return '#1A1A1A'; if(tName === 'CAP') return '#D0D0D0';
+    if(tName === 'INT') return '#1A1A1A'; if(tName === 'GRE') return '#1E3A8A';
     return '#B89922'; 
 }
 function getTeamColors(tName) { 
@@ -731,6 +759,8 @@ function getTeamColors(tName) {
     if(tName === 'BAH') return ['#E0E0E0', '#283593']; if(tName === 'FOR') return ['#E0E0E0', '#A32020'];
     if(tName === 'PAL') return ['#E0E0E0', '#1B5E20']; if(tName === 'SPO') return ['#E0E0E0', '#1A1A1A'];
     if(tName === 'SAN') return ['#E0E0E0', '#1A1A1A']; if(tName === 'COR') return ['#E0E0E0', '#1A1A1A'];
+    if(tName === 'CFC') return ['#E0E0E0', '#1B5E20']; if(tName === 'CAP') return ['#A32020', '#1A1A1A'];
+    if(tName === 'INT') return ['#A32020', '#E0E0E0']; if(tName === 'GRE') return ['#283593', '#1A1A1A'];
     return ['#E0E0E0', '#1A1A1A']; 
 }
 function getUniqueNumbers(count) {
@@ -742,6 +772,7 @@ function getUniqueNumbers(count) {
 function setupInitialMatch() {
     scoreP1 = 0; scoreAI = 0; nextTurn = 1; 
     currentHalf = 1; currentTime = 0; extraTime = Math.floor(Math.random() * 5) + 1; p1Side = 'BOTTOM';
+    touchesInTurn = 0; touchedOpponentInTurn = false;
     
     if (gameMode.startsWith('CAMP')) {
         let roundMatches = schedule[currentRound];
@@ -801,6 +832,7 @@ function startFormationPhase() {
     ball.x = canvas.width / 2; ball.y = canvas.height / 2; ball.z = 0; ball.vx = 0; ball.vy = 0; ball.vz = 0; ball.visible = true;
     lastTouchTeam = 0; celebrationTarget = null;
     isKickoff = true; 
+    touchesInTurn = 0; touchedOpponentInTurn = false;
     
     let aiIdx = 0; let p1Idx = 0; const cw = canvas.width;
     
@@ -851,6 +883,7 @@ function confirmFormation() {
     document.getElementById('btn-confirm-formation').classList.add('hidden');
     for(let p of players) { if(p.team === 1) { p.startX = p.x; p.startY = p.y; } }
     STATE = 'IDLE'; TURN = nextTurn;
+    touchesInTurn = 0; touchedOpponentInTurn = false;
     if (TURN === 2) setTimeout(playAI, 1000);
 }
 
@@ -884,7 +917,11 @@ function pointerUp(e) {
         if (dist <= 20) { selectedPlayer = null; STATE = 'IDLE'; return; }
         let maxDist = 60; if (dist > maxDist) { dx = (dx / dist) * maxDist; dy = (dy / dist) * maxDist; }
         let powerMult = 28 / maxDist;
-        if (dist > 5) { playKick(); ballTouched = false; lastShotY = ball.y; advanceTime(); } 
+        if (dist > 5) { 
+            playKick(); ballTouched = false; lastShotY = ball.y; advanceTime(); 
+            touchesInTurn++;
+            touchedOpponentInTurn = false;
+        } 
         selectedPlayer.vx = dx * powerMult * 0.7; selectedPlayer.vy = dy * powerMult * 0.7;
         selectedPlayer = null; STATE = 'MOVING';
     }
@@ -901,6 +938,11 @@ function resolveCollision(c1, c2) {
             
             ballTouched = true; lastPlayerToTouchBall = p; lastTouchTeam = p.team;
             
+            // Regra de 2 toques
+            if (!p.isGK && p.team !== TURN) {
+                touchedOpponentInTurn = true;
+            }
+
             let impactSpeed = Math.hypot(p.vx, p.vy);
             if (impactSpeed > 14 && ball.z <= 0 && STATE !== 'FORMATION') { 
                 if (!isKickoff) { ball.vz = (impactSpeed - 10) * 0.64; }
@@ -1019,8 +1061,16 @@ function updatePhysics() {
             let missTexts = ["QUE DESELEGANTE!", "QUE TRISTEZA!", "JOGADA HORRÍVEL!"];
             showPopup(missTexts[Math.floor(Math.random() * missTexts.length)], 120, false);
         }
-        TURN = TURN === 1 ? 2 : 1; 
-        if (TURN === 2) setTimeout(playAI, 400); 
+
+        // LÓGICA DA REGRA DE 2 TOQUES
+        if (touchesInTurn < 2 && !touchedOpponentInTurn) {
+            if (TURN === 2) setTimeout(playAI, 400);
+        } else {
+            touchesInTurn = 0;
+            touchedOpponentInTurn = false;
+            TURN = TURN === 1 ? 2 : 1; 
+            if (TURN === 2) setTimeout(playAI, 400); 
+        }
     }
 }
 
@@ -1046,6 +1096,10 @@ function processGoal(isOwnGoal) {
             else if (scoringTeamName === 'SPO') showPopup("TRICOLOORRR!", 300, false);
             else if (scoringTeamName === 'SAN') showPopup("SANTOSSSS!", 300, false);
             else if (scoringTeamName === 'COR') showPopup("CORINTHIANSSS!", 300, false);
+            else if (scoringTeamName === 'CFC') showPopup("COXAAAAA!", 300, false);
+            else if (scoringTeamName === 'CAP') showPopup("FURACÃOOOO!", 300, false);
+            else if (scoringTeamName === 'INT') showPopup("VAMO INTER!", 300, false);
+            else if (scoringTeamName === 'GRE') showPopup("IMORTALLL!", 300, false);
         } else {
             let isGolaco = false;
             if (p1Side === 'BOTTOM') {
@@ -1098,6 +1152,9 @@ function playAI() {
     let dx = targetX - bestPlayer.x; let dy = targetY - bestPlayer.y; let dist = Math.hypot(dx, dy); if (dist === 0) { dx = 0; dy = 1; dist = 1; } 
     
     playKick(); ballTouched = false; lastShotY = ball.y; advanceTime();
+    touchesInTurn++;
+    touchedOpponentInTurn = false;
+    
     let power = Math.min(27, dist * 0.15 + 14);
     bestPlayer.vx = (dx / dist) * power; bestPlayer.vy = (dy / dist) * power; STATE = 'MOVING';
 }
@@ -1146,12 +1203,15 @@ function drawButton(p) {
     let tName = p.team === 1 ? playerTeamType : aiTeamType;
     let isClash = false; let clashType = '';
 
+    // Lógicas de Uniformes Alternativos (Clash)
     if (p.team === 2) {
         if ((playerTeamType === 'FLA' && aiTeamType === 'VIT') || (playerTeamType === 'VIT' && aiTeamType === 'FLA')) { isClash = true; clashType = 'FLA_VIT'; } 
         else if ((playerTeamType === 'BAH' && aiTeamType === 'FOR') || (playerTeamType === 'FOR' && aiTeamType === 'BAH')) { isClash = true; clashType = 'BAH_FOR'; } 
         else if ((playerTeamType === 'VAS' && aiTeamType === 'CEA') || (playerTeamType === 'CEA' && aiTeamType === 'VAS')) { isClash = true; clashType = 'VAS_CEA'; }
         else if ((playerTeamType === 'COR' && aiTeamType === 'VAS') || (playerTeamType === 'VAS' && aiTeamType === 'COR')) { isClash = true; clashType = 'COR_VAS'; }
         else if ((playerTeamType === 'COR' && aiTeamType === 'CEA') || (playerTeamType === 'CEA' && aiTeamType === 'COR')) { isClash = true; clashType = 'COR_CEA'; }
+        else if (aiTeamType === 'CFC' && playerTeamType === 'PAL') { isClash = true; clashType = 'CFC_PAL'; }
+        else if (aiTeamType === 'CAP' && (playerTeamType === 'FLA' || playerTeamType === 'VIT')) { isClash = true; clashType = 'CAP_RED'; }
     }
     
     if (p.isGK) { ctx.fillStyle = p.gkColor; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2); } 
@@ -1172,6 +1232,15 @@ function drawButton(p) {
             ctx.fillStyle = '#1a1a1a'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.18, p.y - p.r, p.r * 2 * 0.64, p.r * 2);
             ctx.fillStyle = '#A32020'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.82, p.y - p.r, p.r * 2 * 0.03, p.r * 2);
             ctx.fillStyle = '#e0e0e0'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.85, p.y - p.r, p.r * 2 * 0.15, p.r * 2);
+        } else if (clashType === 'CFC_PAL') {
+            ctx.fillStyle = '#1B5E20'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+            ctx.fillStyle = '#e0e0e0'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.35, p.y - p.r, 2, p.r * 2); ctx.fillRect(p.x - p.r + p.r * 2 * 0.65, p.y - p.r, 2, p.r * 2);
+        } else if (clashType === 'CAP_RED') {
+            ctx.fillStyle = '#1a1a1a'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(Math.PI / 4);
+            ctx.fillStyle = '#A32020';
+            ctx.fillRect(-p.r, 0, p.r * 2, 4); ctx.fillRect(-p.r, p.r * 0.35, p.r * 2, 4); ctx.fillRect(-p.r, p.r * 0.7, p.r * 2, 4);
+            ctx.restore();
         }
     }
     else if (tName === 'FLA') { for (let i = 0; i < 5; i++) { ctx.fillStyle = (i % 2 === 0) ? '#A32020' : '#1a1a1a'; ctx.fillRect(p.x - p.r, p.y - p.r + (i * (p.r * 2) / 5), p.r * 2, (p.r * 2) / 5); } } 
@@ -1210,6 +1279,28 @@ function drawButton(p) {
         ctx.fillStyle = '#A32020'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.82, p.y - p.r, p.r * 2 * 0.03, p.r * 2);
         ctx.fillStyle = '#1a1a1a'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.85, p.y - p.r, p.r * 2 * 0.15, p.r * 2);
     }
+    else if (tName === 'CFC') {
+        ctx.fillStyle = '#e0e0e0'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+        ctx.fillStyle = '#1B5E20'; ctx.fillRect(p.x - p.r + p.r * 2 * 0.25, p.y - p.r, p.r * 2 * 0.13, p.r * 2); ctx.fillRect(p.x - p.r + p.r * 2 * 0.62, p.y - p.r, p.r * 2 * 0.13, p.r * 2);
+    }
+    else if (tName === 'CAP') {
+        ctx.fillStyle = '#A32020'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(Math.PI / 4);
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillRect(-p.r, 0, p.r * 2, 4); ctx.fillRect(-p.r, p.r * 0.35, p.r * 2, 4); ctx.fillRect(-p.r, p.r * 0.7, p.r * 2, 4);
+        ctx.restore();
+    }
+    else if (tName === 'INT') {
+        ctx.fillStyle = '#A32020'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+    }
+    else if (tName === 'GRE') {
+        ctx.fillStyle = '#1a1a1a'; ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+        for(let i=0; i<2; i++) {
+            let offset = (i === 0) ? -p.r * 0.45 : p.r * 0.15;
+            ctx.fillStyle = '#e0e0e0'; ctx.fillRect(p.x + offset - 1, p.y - p.r, p.r * 0.3 + 2, p.r * 2);
+            ctx.fillStyle = '#283593'; ctx.fillRect(p.x + offset, p.y - p.r, p.r * 0.3, p.r * 2);
+        }
+    }
     
     let grad = ctx.createRadialGradient(p.x - p.r * 0.3, p.y - p.r * 0.3, p.r * 0.1, p.x, p.y, p.r);
     grad.addColorStop(0, 'rgba(255, 255, 255, 0.5)'); grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)'); grad.addColorStop(1, 'rgba(0, 0, 0, 0.5)');
@@ -1221,7 +1312,7 @@ function drawButton(p) {
         
         let needDarkText = false;
         if (!p.isGK) {
-            if (tName === 'SAN' || tName === 'COR' || tName === 'SPO' || tName === 'PAL') needDarkText = true;
+            if (tName === 'SAN' || tName === 'COR' || tName === 'SPO' || tName === 'PAL' || tName === 'CFC') needDarkText = true;
             if (isClash && (clashType === 'FLA_VIT' || clashType === 'BAH_FOR')) needDarkText = true;
         }
 
@@ -1235,7 +1326,7 @@ function drawButton(p) {
 
 function drawSoccerBall(b) {
     ctx.save(); 
-    let visualScale = Math.min(1.5, 1 + (b.z * 0.02)); 
+    let visualScale = Math.min(1.4, 1 + (b.z * 0.02)); 
     ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8 + b.z*0.8; ctx.shadowOffsetX = 4 + b.z*0.6; ctx.shadowOffsetY = 4 + b.z*0.6;
     
     ctx.translate(b.x, b.y); ctx.scale(visualScale, visualScale); b.rotation += (Math.abs(b.vx) + Math.abs(b.vy)) * 0.05; ctx.rotate(b.rotation);
@@ -1280,10 +1371,35 @@ function drawNetGrid(x, y, w, h) {
 
 function drawTurnIndicator() {
     if (STATE !== 'IDLE' && STATE !== 'AIMING') return;
-    ctx.save(); ctx.translate(boundLeft / 2, canvas.height / 2); ctx.fillStyle = TURN === 1 ? '#00d2ff' : '#A32020'; ctx.beginPath();
-    if (TURN === 1) { if (p1Side === 'BOTTOM') { ctx.moveTo(0, -30); ctx.lineTo(20, 10); ctx.lineTo(10, 10); ctx.lineTo(10, 40); ctx.lineTo(-10, 40); ctx.lineTo(-10, 10); ctx.lineTo(-20, 10); } else { ctx.moveTo(0, 30); ctx.lineTo(20, -10); ctx.lineTo(10, -10); ctx.lineTo(10, -40); ctx.lineTo(-10, -40); ctx.lineTo(-10, -10); ctx.lineTo(-20, -10); } } 
-    else { if (p1Side === 'BOTTOM') { ctx.moveTo(0, 30); ctx.lineTo(20, -10); ctx.lineTo(10, -10); ctx.lineTo(10, -40); ctx.lineTo(-10, -40); ctx.lineTo(-10, -10); ctx.lineTo(-20, -10); } else { ctx.moveTo(0, -30); ctx.lineTo(20, 10); ctx.lineTo(10, 10); ctx.lineTo(10, 40); ctx.lineTo(-10, 40); ctx.lineTo(-10, 10); ctx.lineTo(-20, 10); } }
-    ctx.closePath(); ctx.fill(); ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 5; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke(); ctx.restore();
+    ctx.save();
+    ctx.translate(boundLeft / 2, canvas.height / 2);
+    
+    let color = TURN === 1 ? '#00d2ff' : '#A32020';
+    let isUp = (TURN === 1 && p1Side === 'BOTTOM') || (TURN === 2 && p1Side === 'TOP');
+    let arrowsToDraw = 2 - touchesInTurn;
+    if (arrowsToDraw <= 0) { ctx.restore(); return; }
+
+    for (let i = 0; i < arrowsToDraw; i++) {
+        ctx.save();
+        let offset = isUp ? (i * 45) : (i * -45); 
+        let startY = isUp ? -20 : 20; 
+        ctx.translate(0, startY + offset);
+        
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        if (isUp) {
+            ctx.moveTo(0, -20); ctx.lineTo(15, 0); ctx.lineTo(7, 0); ctx.lineTo(7, 20); ctx.lineTo(-7, 20); ctx.lineTo(-7, 0); ctx.lineTo(-15, 0);
+        } else {
+            ctx.moveTo(0, 20); ctx.lineTo(15, 0); ctx.lineTo(7, 0); ctx.lineTo(7, -20); ctx.lineTo(-7, -20); ctx.lineTo(-7, 0); ctx.lineTo(-15, 0);
+        }
+        ctx.closePath();
+        ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 5; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.restore();
+    }
+    ctx.restore();
 }
 
 function drawBenches() {
