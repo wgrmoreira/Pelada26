@@ -213,7 +213,7 @@ let goalWidth, goalDepth, areaW, areaH;
 let popup = { text: "", timer: 0, maxTimer: 0, isRetro: false };
 let ballTouched = false; let lastShotY = 0; let lastTouchTeam = 0; 
 let lastPlayerToTouchBall = null; let celebrationTarget = null; let isOwnGoalCelebration = false;
-let isKickoff = true; // Trava para impedir gol na saída de bola
+let isKickoff = true;
 
 let currentRound = 0; let schedule = []; let standings = [];
 let startClicks = 0;
@@ -535,7 +535,7 @@ function finishTournament() {
     }
 }
 
-// ================= CORES DESATURADAS =================
+// ================= CORES DESATURADAS E GOLEIRO =================
 function getGKColor(tName) { 
     if(tName === 'FLA') return '#B89922'; if(tName === 'VAS') return '#666666'; 
     if(tName === 'FLU') return '#1E3A8A'; if(tName === 'BOT') return '#D0D0D0'; 
@@ -575,8 +575,9 @@ function setupInitialMatch() {
     const pr = Math.min(cw, ch) * 0.047; ball = { x: 0, y: 0, z: 0, vx: 0, vy: 0, vz: 0, r: pr * 0.45, mass: 0.5, rotation: 0, visible: true };
     players = []; goalkeepers = [];
     
-    goalkeepers.push({ x: 0, y: 0, r: pr*0.75, mass: 50, team: 2, isGK: true, num: 1, gkColor: getGKColor(aiTeamType), tx: 0, ty: 0, bounds: null });
-    goalkeepers.push({ x: 0, y: 0, r: pr*0.75, mass: 50, team: 1, isGK: true, num: 1, gkColor: getGKColor(playerTeamType), tx: 0, ty: 0, bounds: null });
+    // Goleiro: Raio aumentado em 20% (pr * 0.90)
+    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 2, isGK: true, num: 1, gkColor: getGKColor(aiTeamType), tx: 0, ty: 0, bounds: null });
+    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 1, isGK: true, num: 1, gkColor: getGKColor(playerTeamType), tx: 0, ty: 0, bounds: null });
 
     let numsP1 = getUniqueNumbers(4); let numsAI = getUniqueNumbers(4);
     for(let i=0; i<4; i++) players.push({ x: 0, y: 0, vx: 0, vy: 0, r: pr, mass: 1, team: 1, num: numsP1[i] });
@@ -693,31 +694,37 @@ function resolveCollision(c1, c2) {
     if (dist < c1.r + c2.r) {
         if (c1 === ball || c2 === ball) {
             let p = c1 === ball ? c2 : c1;
-            // Se a bola estiver alta (z > 12), o jogador de linha passa direto (não colide)
+            // A BOLA PASSA POR CIMA DOS JOGADORES SE ESTIVER NO AR (exceto goleiros)
             if (ball.z > 12 && !p.isGK) return; 
             
             ballTouched = true; lastPlayerToTouchBall = p; lastTouchTeam = p.team;
             
-            // Cavadinha acontece NO IMPACTO da colisão, com a direção herdada do chute
+            // Cavadinha (Lob) calculada apenas no momento da colisão com o jogador
             let impactSpeed = Math.hypot(p.vx, p.vy);
             if (impactSpeed > 14 && ball.z <= 0 && STATE !== 'FORMATION') { 
                 if (!isKickoff) {
-                    ball.vz = (impactSpeed - 10) * 0.64; // Reduzido matematicamente em 20%
+                    ball.vz = (impactSpeed - 10) * 0.64; 
                 }
             }
-            isKickoff = false; // Destrava a cavadinha após o primeiro toque da saída de bola
+            isKickoff = false; 
         }
 
         if ((c1 === ball && c2.isGK) || (c2 === ball && c1.isGK)) {
             let gk = c1.isGK ? c1 : c2; 
             if (Math.hypot(ball.vx, ball.vy) > 5 && STATE !== 'SCORED') showPopup("QUE DEFESA!", 120, false);
             audioDefesa.currentTime = 0; audioDefesa.play().catch(e=>{});
+            
             let overlap = (ball.r + gk.r) - dist + 1; let nx = dx / dist; let ny = dy / dist;
             if (c1 === ball) { ball.x -= nx*overlap; ball.y -= ny*overlap; } else { ball.x += nx*overlap; ball.y += ny*overlap; }
+            
             let isGkTop = gk.y < canvas.height/2;
             let forceY = isGkTop ? 10 : -10; 
             let forceX = (ball.x - gk.x) * 0.2; forceX = Math.max(-8, Math.min(8, forceX));
-            ball.vx = forceX; ball.vy = forceY; ball.vz = 0; return;
+            
+            // ZERA A ALTURA DA BOLA AO BATER NO GOLEIRO (Impede a bola de encobrir o Goleiro)
+            ball.vx = forceX; ball.vy = forceY; 
+            ball.vz = 0; ball.z = 0; 
+            return;
         }
 
         let overlap = (c1.r + c2.r) - dist; let nx = dx / dist; let ny = dy / dist;
@@ -852,7 +859,6 @@ function processGoal(isOwnGoal) {
     }
 
     fireworksTimer = 300; nextTurn = scoringTeam === 1 ? 2 : 1; 
-    
     celebrationTarget = lastPlayerToTouchBall;
     isOwnGoalCelebration = isOwnGoal;
 
@@ -890,6 +896,8 @@ function playAI() {
     
     playKick(); ballTouched = false; lastShotY = ball.y; advanceTime();
     let power = Math.min(27, dist * 0.15 + 14);
+    
+    // IA não da cavadinha para não ter erro de apelação
     bestPlayer.vx = (dx / dist) * power; bestPlayer.vy = (dy / dist) * power; STATE = 'MOVING';
 }
 
@@ -989,9 +997,8 @@ function drawButton(p) {
 
 function drawSoccerBall(b) {
     ctx.save(); 
-    let visualScale = Math.min(1.4, 1 + (b.z * 0.02)); // Aumenta visualmente até no máximo 1.4x o tamanho
-    
-    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8 + b.z*0.8; ctx.shadowOffsetX = 4 + b.z*0.6; ctx.shadowOffsetY = 4 + b.z*0.6;
+    let visualScale = Math.min(1.4, 1 + (b.z * 0.02)); 
+    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8 + b.z; ctx.shadowOffsetX = 4 + b.z*0.8; ctx.shadowOffsetY = 4 + b.z*0.8;
     
     ctx.translate(b.x, b.y); ctx.scale(visualScale, visualScale); b.rotation += (Math.abs(b.vx) + Math.abs(b.vy)) * 0.05; ctx.rotate(b.rotation);
     
