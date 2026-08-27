@@ -213,6 +213,7 @@ let goalWidth, goalDepth, areaW, areaH;
 let popup = { text: "", timer: 0, maxTimer: 0, isRetro: false };
 let ballTouched = false; let lastShotY = 0; let lastTouchTeam = 0; 
 let lastPlayerToTouchBall = null; let celebrationTarget = null; let isOwnGoalCelebration = false;
+let isKickoff = true; // Trava para impedir gol na saída de bola
 
 let currentRound = 0; let schedule = []; let standings = [];
 let startClicks = 0;
@@ -599,6 +600,7 @@ function startFormationPhase() {
     STATE = 'FORMATION';
     ball.x = canvas.width / 2; ball.y = canvas.height / 2; ball.z = 0; ball.vx = 0; ball.vy = 0; ball.vz = 0; ball.visible = true;
     lastTouchTeam = 0; celebrationTarget = null;
+    isKickoff = true; // Trava a bola de subir no primeiro toque da saída
     
     let aiIdx = 0; let p1Idx = 0; const cw = canvas.width;
     
@@ -691,15 +693,19 @@ function resolveCollision(c1, c2) {
     if (dist < c1.r + c2.r) {
         if (c1 === ball || c2 === ball) {
             let p = c1 === ball ? c2 : c1;
+            // Se a bola estiver alta (z > 12), o jogador de linha passa direto (não colide)
             if (ball.z > 12 && !p.isGK) return; 
             
             ballTouched = true; lastPlayerToTouchBall = p; lastTouchTeam = p.team;
             
-            // Ativa o Lob (Cavadinha) SOMENTE no momento da colisão de um chute forte
+            // Cavadinha acontece NO IMPACTO da colisão, com a direção herdada do chute
             let impactSpeed = Math.hypot(p.vx, p.vy);
             if (impactSpeed > 14 && ball.z <= 0 && STATE !== 'FORMATION') { 
-                ball.vz = (impactSpeed - 10) * 0.8; 
+                if (!isKickoff) {
+                    ball.vz = (impactSpeed - 10) * 0.64; // Reduzido matematicamente em 20%
+                }
             }
+            isKickoff = false; // Destrava a cavadinha após o primeiro toque da saída de bola
         }
 
         if ((c1 === ball && c2.isGK) || (c2 === ball && c1.isGK)) {
@@ -983,9 +989,9 @@ function drawButton(p) {
 
 function drawSoccerBall(b) {
     ctx.save(); 
-    let visualScale = Math.min(1.5, 1 + (b.z * 0.025)); 
+    let visualScale = Math.min(1.4, 1 + (b.z * 0.02)); // Aumenta visualmente até no máximo 1.4x o tamanho
     
-    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8 + b.z; ctx.shadowOffsetX = 4 + b.z*0.8; ctx.shadowOffsetY = 4 + b.z*0.8;
+    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 8 + b.z*0.8; ctx.shadowOffsetX = 4 + b.z*0.6; ctx.shadowOffsetY = 4 + b.z*0.6;
     
     ctx.translate(b.x, b.y); ctx.scale(visualScale, visualScale); b.rotation += (Math.abs(b.vx) + Math.abs(b.vy)) * 0.05; ctx.rotate(b.rotation);
     
