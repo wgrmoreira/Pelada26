@@ -65,7 +65,7 @@
         }
         .retro-menu-body { background: #1A237E; border: 3px solid #2E7D32; display: flex; flex-direction: column; }
         .retro-menu-btn {
-            background: transparent; color: #eee; font-size: 10px; border: none; border-bottom: 2px solid #3949AB; 
+            background: transparent; color: #eee; font-size: 12px; border: none; border-bottom: 2px solid #3949AB; 
             padding: 15px; cursor: pointer; transition: 0.1s; text-shadow: 2px 2px 0px #000;
         }
         .retro-menu-btn:hover, .retro-menu-btn:active { color: #C0A020; background: rgba(255,255,255,0.1); }
@@ -86,7 +86,7 @@
         .team-btn.selected-ai { border-color: #ff3333; transform: scale(1.05); }
         .team-btn.disabled { opacity: 0.3; pointer-events: none; }
         
-        /* Cores dos Botões via Classes para funcionar na clonagem */
+        /* Cores dos Botões HTML */
         .btn-fla { background: repeating-linear-gradient(180deg, #A32020 0px, #A32020 11px, #1a1a1a 11px, #1a1a1a 22px); }
         .btn-vas { background: linear-gradient(135deg, #e0e0e0 0%, #e0e0e0 40%, #1a1a1a 40%, #1a1a1a 60%, #e0e0e0 60%, #e0e0e0 100%); border-color: #666; }
         .btn-flu { background: repeating-linear-gradient(90deg, #1B5E20 0px, #1B5E20 9px, #fff 9px, #fff 11px, #7F0000 11px, #7F0000 20px, #fff 20px, #fff 22px); }
@@ -103,9 +103,7 @@
         .btn-san { background: #e0e0e0; border-color: #666; }
         .btn-cor { background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 15%, #A32020 15%, #A32020 18%, #e0e0e0 18%, #e0e0e0 82%, #A32020 82%, #A32020 85%, #1a1a1a 85%, #1a1a1a 100%); }
 
-        /* Componentes de Tela de Tabela e Customização */
-        .table-container { width: 90%; max-width: 500px; max-height: 50vh; overflow-y: auto; border-radius: 10px; margin: 20px 0; background: rgba(0,0,0,0.85); box-shadow: 0 8px 20px rgba(0,0,0,0.8); }
-        table.standings { width: 100%; border-collapse: collapse; text-align: center; }
+        table.standings { width: 90%; max-width: 500px; border-collapse: collapse; margin: 20px 0; background: rgba(0,0,0,0.85); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.8); text-align: center; }
         .standings th { background: #111; color: #C0A020; padding: 10px; font-size: 8px; border-bottom: 2px solid #333; position: sticky; top: 0;}
         .standings td { padding: 10px; font-size: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd;}
         .standings tr:last-child td { border-bottom: none; }
@@ -119,11 +117,7 @@
         
         .trophy { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 20px #C0A020); }
 
-        /* Custom Camp UI */
-        #custom-camp-input {
-            width: 80%; max-width: 300px; padding: 10px; background: rgba(0,0,0,0.5); border: 2px solid #4aa3df;
-            color: #fff; font-size: 10px; text-align: center; margin-bottom: 15px;
-        }
+        #custom-camp-input { width: 80%; max-width: 300px; padding: 10px; background: rgba(0,0,0,0.5); border: 2px solid #4aa3df; color: #fff; font-size: 10px; text-align: center; margin-bottom: 15px; }
         #custom-camp-input:focus { outline: none; border-color: #C0A020; }
         .size-btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
         .size-btn { background: #111; color: #777; border: 2px solid #555; padding: 10px; font-size: 8px; cursor: pointer; }
@@ -610,7 +604,7 @@ function endOfMatch() {
     setTimeout(() => { processMatchResult(); }, 3000);
 }
 
-// ================= CAMPEONATO (ROUND ROBIN GERADOR) =================
+// ================= CAMPEONATO =================
 function generateSchedule(teamsArr) {
     let n = teamsArr.length; let rs = []; let t = [...teamsArr];
     for (let round = 0; round < n - 1; round++) {
@@ -720,7 +714,7 @@ function finishTournament() {
     }
 }
 
-// ================= CORES E DESENHOS DE TIMES =================
+// ================= CORES DESATURADAS E GOLEIRO =================
 function getGKColor(tName) { 
     if(tName === 'FLA') return '#B89922'; if(tName === 'VAS') return '#666666'; 
     if(tName === 'FLU') return '#1E3A8A'; if(tName === 'BOT') return '#D0D0D0'; 
@@ -770,8 +764,8 @@ function setupInitialMatch() {
     const pr = Math.min(cw, ch) * 0.047; ball = { x: 0, y: 0, z: 0, vx: 0, vy: 0, vz: 0, r: pr * 0.45, mass: 0.5, rotation: 0, visible: true };
     players = []; goalkeepers = [];
     
-    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 2, isGK: true, num: 1, gkColor: getGKColor(aiTeamType), tx: 0, ty: 0, patrolDir: 1, bounds: null });
-    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 1, isGK: true, num: 1, gkColor: getGKColor(playerTeamType), tx: 0, ty: 0, patrolDir: 1, bounds: null });
+    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 2, isGK: true, num: 1, gkColor: getGKColor(aiTeamType), tx: 0, ty: 0, patrolDir: 1, baseY: 0, bounds: null });
+    goalkeepers.push({ x: 0, y: 0, r: pr*0.90, mass: 50, team: 1, isGK: true, num: 1, gkColor: getGKColor(playerTeamType), tx: 0, ty: 0, patrolDir: 1, baseY: 0, bounds: null });
 
     let numsP1 = getUniqueNumbers(4); let numsAI = getUniqueNumbers(4);
     for(let i=0; i<4; i++) players.push({ x: 0, y: 0, vx: 0, vy: 0, r: pr, mass: 1, team: 1, num: numsP1[i] });
@@ -787,8 +781,19 @@ function getBottomArea() { return { minX: canvas.width/2 - goalWidth/2 + ball.r,
 
 function setupPositionsForHalf() {
     const cw = canvas.width;
-    goalkeepers[0].team = 2; goalkeepers[0].y = p1Side === 'BOTTOM' ? boundTop + fieldH*0.05 : boundBottom - fieldH*0.05; goalkeepers[0].ty = goalkeepers[0].y; goalkeepers[0].x = cw/2; goalkeepers[0].bounds = p1Side === 'BOTTOM' ? getTopArea() : getBottomArea();
-    goalkeepers[1].team = 1; goalkeepers[1].y = p1Side === 'BOTTOM' ? boundBottom - fieldH*0.05 : boundTop + fieldH*0.05; goalkeepers[1].ty = goalkeepers[1].y; goalkeepers[1].x = cw/2; goalkeepers[1].bounds = p1Side === 'BOTTOM' ? getBottomArea() : getTopArea();
+    goalkeepers[0].team = 2; 
+    goalkeepers[0].baseY = p1Side === 'BOTTOM' ? boundTop + fieldH*0.05 : boundBottom - fieldH*0.05;
+    goalkeepers[0].y = goalkeepers[0].baseY; 
+    goalkeepers[0].ty = goalkeepers[0].y; 
+    goalkeepers[0].x = cw/2; 
+    goalkeepers[0].bounds = p1Side === 'BOTTOM' ? getTopArea() : getBottomArea();
+
+    goalkeepers[1].team = 1; 
+    goalkeepers[1].baseY = p1Side === 'BOTTOM' ? boundBottom - fieldH*0.05 : boundTop + fieldH*0.05;
+    goalkeepers[1].y = goalkeepers[1].baseY; 
+    goalkeepers[1].ty = goalkeepers[1].y; 
+    goalkeepers[1].x = cw/2; 
+    goalkeepers[1].bounds = p1Side === 'BOTTOM' ? getBottomArea() : getTopArea();
 }
 
 function startFormationPhase() {
@@ -830,7 +835,11 @@ function startFormationPhase() {
             aiIdx++;
         }
     }
-    for(let gk of goalkeepers) { gk.vx = 0; gk.vy = 0; gk.x = canvas.width / 2; gk.y = gk.team === 1 ? (p1Side === 'BOTTOM' ? boundBottom - fieldH*0.05 : boundTop + fieldH*0.05) : (p1Side === 'BOTTOM' ? boundTop + fieldH*0.05 : boundBottom - fieldH*0.05); gk.ty = gk.y; }
+    for(let gk of goalkeepers) { 
+        gk.vx = 0; gk.vy = 0; gk.x = canvas.width / 2; 
+        gk.baseY = gk.team === 1 ? (p1Side === 'BOTTOM' ? boundBottom - fieldH*0.05 : boundTop + fieldH*0.05) : (p1Side === 'BOTTOM' ? boundTop + fieldH*0.05 : boundBottom - fieldH*0.05); 
+        gk.y = gk.baseY; gk.ty = gk.y; 
+    }
     document.getElementById('btn-confirm-formation').classList.remove('hidden');
 }
 
@@ -937,18 +946,19 @@ function updatePhysics() {
     let ballInBotArea = ball.x > canvas.width/2 - areaW/2 && ball.x < canvas.width/2 + areaW/2 && ball.y > boundBottom - areaH;
 
     for (let gk of goalkeepers) {
-        let isGkTop = gk.y < canvas.height/2;
-        if (isGkTop && ballInTopArea && ball.visible) { 
-            gk.tx = ball.x; gk.ty = ball.y; 
-            let dx = gk.tx - gk.x; let dy = gk.ty - gk.y; let dist = Math.hypot(dx, dy);
-            if(dist > 0) { gk.x += (dx / dist) * 2.1; gk.y += (dy / dist) * 2.1; }
-        } else if (!isGkTop && ballInBotArea && ball.visible) { 
-            gk.tx = ball.x; gk.ty = ball.y; 
-            let dx = gk.tx - gk.x; let dy = gk.ty - gk.y; let dist = Math.hypot(dx, dy);
+        let isGkTop = gk.baseY < canvas.height/2;
+        let ballInArea = isGkTop ? ballInTopArea : ballInBotArea;
+
+        if (ballInArea && ball.visible) { 
+            let dx = ball.x - gk.x; let dy = ball.y - gk.y; let dist = Math.hypot(dx, dy);
             if(dist > 0) { gk.x += (dx / dist) * 2.1; gk.y += (dy / dist) * 2.1; }
         } else {
+            if (Math.abs(gk.baseY - gk.y) > 2) {
+                gk.y += (gk.baseY > gk.y ? 1 : -1) * 2.1;
+            } else {
+                gk.y = gk.baseY;
+            }
             gk.x += gk.patrolDir * 1.05;
-            gk.y = gk.ty; 
             if (gk.x < gk.bounds.minX) { gk.x = gk.bounds.minX; gk.patrolDir = 1; }
             if (gk.x > gk.bounds.maxX) { gk.x = gk.bounds.maxX; gk.patrolDir = -1; }
         }
